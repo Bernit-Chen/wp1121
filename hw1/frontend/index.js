@@ -24,12 +24,19 @@ function setupEventListeners() {
   );
   addTodoButton.addEventListener("click", async () => {
     const title = todoInput.value;
+    const label ="標籤";
+    const mood = "心情";
+    const description = todoDescriptionInput.value;
     if (!title) {
       alert("Please enter a todo title!");
       return;
     }
+    if (!description) {
+      alert("Please enter a todo description!");
+      return;
+    }
     try {
-      const todo = await createTodo({ title, description });
+      const todo = await createTodo({ title, description,label,mood });
       renderTodo(todo);
     } catch (error) {
       alert("Failed to create todo!");
@@ -55,6 +62,10 @@ function createTodoElement(todo) {
   checkbox.dataset.id = todo.id;
   const title = item.querySelector("p.todo-title");
   title.innerText = todo.title;
+  const label = item.querySelector("p.todo-label");
+  label.innerText = todo.label;
+  const mood = item.querySelector("p.todo-mood");
+  mood.innerText = todo.mood;
   const description = item.querySelector("p.todo-description");
   description.innerText = todo.description;
   const deleteButton = item.querySelector("button.delete-todo");
