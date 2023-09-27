@@ -14,10 +14,23 @@
   <body>
     <h1>My Diary日記</h1>
     <button id="add-new" onclick="addNew()">新增日記卡</button>
+    <br><br>
+    <select id="selectlabel">
+      <option value="all">all</option>
+      <option value="學業">學業</option>
+      <option value="人際">人際</option>
+      <option value="社團">社團</option>
+    </select>
+    <select id="selectmood">
+      <option value="all">all</option>
+      <option value="快樂">快樂</option>
+      <option value="生氣">生氣</option>
+      <option value="難過">難過</option>
+    </select>
     <section id="todos"></section>
   </body>
   <template id="todo-item-template">
-    <details id="" class="todo-item">
+    <details id="" class="todo-item" style="display: block;">
       <summary>
         <div>
           <p class="todo-title">todo 1</p>

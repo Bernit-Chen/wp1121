@@ -16,28 +16,45 @@ async function main() {
     alert("Failed to load todos!");
   }
 }
+
 function checkdate(){
   const todoInput = document.querySelector("#todo-input");
-  // const origindate = todoInput.valuestr.split('.');
-  try {
-    const inputDate = new Date(todoInput.value.split(' ')[0]);
-    // console.log(todoInput.value.split(' ')[0]);
-    inputDate.getDate();
-    inputDate.getMonth();
-    inputDate.getFullYear();
+  const origindate = todoInput.value;
+  if(checkformat(origindate)!=true){
+    return false;
   }
-  catch(e) {
-    alert("wrong format");
+  const year = get_Year(origindate);
+  const month = get_Month(origindate);
+  const date = get_Date(origindate);
+  //const week = get_Week(origindate);
+  const newdate = year+'/'+month+'/'+date;
+  const dateObj = new Date(newdate);
+  if(!isNaN(dateObj)!=true){
+    return false;
   }
-
-
-  // const dateObj = new Date(origindate);
-  // if(1){
-  //   return true;
-  // }else{
-  //   return false;
-  // }
+  return true;
 }
+
+function checkformat(x){
+  if(x.length===14 && x[4]==='.' && x[7]==='.' && x[10]===' ' && x[11]==='(' && x[13]===')'){
+    return true;
+  }else{
+    return false;
+  }
+}
+function get_Year(x){
+  return x[0]+x[1]+x[2]+x[3];
+}
+function get_Month(x){
+  return x[5]+x[6];
+}
+function get_Date(x){
+  return x[8]+x[9];
+}
+function get_Week(x){
+  return x[12];
+}
+
 async function setupEventListeners() {
   const saveStatus = sessionStorage.getItem ( "save-status" ) ;
   if(saveStatus !== "new") {
@@ -74,11 +91,15 @@ async function setupEventListeners() {
       alert("Please enter a todo title!");
       return;
     }
+    const chkDate = checkdate();
+    if(chkDate==false){
+      alert("Please enter a correct date!");
+      return;
+    }
     if (!description) {
       alert("Please enter a todo description!");
       return;
     }
-    checkdate();
     try {
       if(saveStatus !== "new") {
         const diary_Id = sessionStorage.getItem ( "id" );
@@ -86,7 +107,7 @@ async function setupEventListeners() {
       }else{
         const todo = await createTodo({ title, description,label,mood });
       }
-      // location.assign("index.html");
+      location.assign("index.html");
     } catch (error) {
       alert("Failed to create todo!");
       return;

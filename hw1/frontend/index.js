@@ -8,15 +8,70 @@ const instance = axios.create({
 
 async function main() {
   // setupEventListeners();
+  const selectLabel = document.querySelector('#selectlabel');
+  const selectMood = document.querySelector('#selectmood');
+  let activeLabel, activeMood;
+  selectLabel.addEventListener("change",()=>{
+    activeLabel = selectLabel.value;
+    activeMood = selectMood.value;
+    filter(activeLabel, activeMood);
+  })
+  selectMood.addEventListener("change",()=>{
+    activeLabel = selectLabel.value;
+    activeMood = selectMood.value;
+    filter(activeLabel, activeMood);
+  })
   try {
     const todos = await getTodos();
-    todos.forEach((todo) => renderTodo(todo));
+    todos.forEach((todo) => {
+      renderTodo(todo);
+      if(todos.label !== activeLabel) {
+        todo.style.display = "none";
+      }
+      if(todos.mood !== activeMood) {
+        todo.style.display = "none";
+      }
+    });
   } catch (error) {
     alert("Failed to load todos!");
   }
 }
+async function filter(label, mood) {
+  const todos = document.querySelectorAll(".todo-item");
+  todos.forEach((todo) => {
+    if(label === 'all' && mood === 'all') {
+      todo.style.display = "block";
+    }
+    else if(label === 'all') {
+      if(todo.querySelector("p.todo-mood").innerHTML === mood) {
+        todo.style.display = "block";
+      }
+      else {
+        todo.style.display = "none";
+      }
+    }
+    else if(mood === 'all') {
+      if(todo.querySelector("p.todo-label").innerHTML === label) {
+        todo.style.display = "block";
+      }
+      else {
+        todo.style.display = "none";
+      }
+    }
+    else {
+      if(todo.querySelector("p.todo-label").innerHTML === label && todo.querySelector("p.todo-mood").innerHTML === mood) {
+        todo.style.display = "block";
+      }
+      else {
+        todo.style.display = "none";
+      }
+    }
+  });
+}
+
 
 function setupEventListeners() {
+  console.log(selectLabel);
   const addTodoButton = document.querySelector("#todo-add");
   const todoInput = document.querySelector("#todo-input");
   const todoDescriptionInput = document.querySelector(
