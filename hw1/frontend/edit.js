@@ -27,8 +27,9 @@ function checkdate(){
   const month = get_Month(origindate);
   const date = get_Date(origindate);
   //const week = get_Week(origindate);
-  const newdate = year+'/'+month+'/'+date;
-  const dateObj = new Date(newdate);
+  const newdate = year+'-'+month+'-'+date;
+  console.log(newdate)
+  const dateObj = Date.parse(newdate);
   if(!isNaN(dateObj)!=true){
     return false;
   }
@@ -55,6 +56,13 @@ function get_Week(x){
   return x[12];
 }
 
+function formatedDate(date) {
+  const d = new Date("2021-03-25");
+  const chi = ['日','一','二','三','四','五','六'];
+  const dateDay = chi[d.getDay()];
+  return date.split('-').join('.')+" ("+dateDay+")";
+}
+
 async function setupEventListeners() {
   const saveStatus = sessionStorage.getItem ( "save-status" ) ;
   if(saveStatus !== "new") {
@@ -65,15 +73,28 @@ async function setupEventListeners() {
         const todoInput = document.querySelector("#todo-input");  //date
         const labelInput = document.querySelector("#todo-label");
         const moodInput = document.querySelector("#todo-mood");
+        const dateD = document.querySelector("#dateD");
         const todoDescriptionInput = document.querySelector(  //content
           "#todo-description-input",
         );
-        todoInput.value = todo.title;
+        todoInput.value = todo.title.split(' ')[0].split('.').join('-');
         labelInput.value = todo.label;
         moodInput.value = todo.mood;
         todoDescriptionInput.value = todo.description;
+        dateD.innerHTML = todo.title;
         }
     });
+  }
+  else {
+    const currentDate = new Date();
+    const dateD = document.querySelector("#dateD");
+    let year = String(currentDate.getFullYear()).padStart(4,"0");
+    let month = String(currentDate.getMonth()+1).padStart(2,"0");
+    let day = String(currentDate.getDate()).padStart(2,"0");
+    // console.log(year+"-"+month+"-"+day);
+    dateD.innerHTML = formatedDate(year+"-"+month+"-"+day);
+    const todoInput = document.querySelector("#todo-input");
+    todoInput.value = formatedDate(year+"-"+month+"-"+day).split(' ')[0].split('.').join('-');
   }
   const addTodoButton = document.querySelector("#todo-add");
   const todo_Input = document.querySelector("#todo-input");  //date
@@ -82,20 +103,26 @@ async function setupEventListeners() {
   const todo_DescriptionInput = document.querySelector(  //content
     "#todo-description-input",
   );
+  const dateD = document.querySelector("#dateD");
+  todo_Input.addEventListener("change",()=>{
+    dateD.innerHTML = formatedDate(todo_Input.value);
+  })
   addTodoButton.addEventListener("click", async () => {
     const title = todo_Input.value;
     const label =label_Input.value;
     const mood = mood_Input.value;
     const description = todo_DescriptionInput.value;
-    if (!title) {
+    if (!title) { //date
       alert("Please enter a todo title!");
       return;
     }
-    const chkDate = checkdate();
-    if(chkDate==false){
-      alert("Please enter a correct date!");
-      return;
-    }
+    const updated = dateD.innerHTML;
+    // const chkDate = checkdate();
+    // if(chkDate==false){
+    //   alert("Please enter a correct date!");
+    //   return;
+    // }
+    // console.log(date);
     if (!description) {
       alert("Please enter a todo description!");
       return;
@@ -103,9 +130,9 @@ async function setupEventListeners() {
     try {
       if(saveStatus !== "new") {
         const diary_Id = sessionStorage.getItem ( "id" );
-        const todo = await updateTodoStatus(diary_Id, { title, description,label,mood });
+        const todo = await updateTodoStatus(diary_Id, { title:updated, description,label,mood });
       }else{
-        const todo = await createTodo({ title, description,label,mood });
+        const todo = await createTodo({ title:updated, description,label,mood });
       }
       location.assign("index.html");
     } catch (error) {
