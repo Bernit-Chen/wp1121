@@ -92,7 +92,7 @@ async function setupEventListeners() {
         const todo = await createTodo({ title:updated, description,label,mood });
         console.log(todo);
       }
-      location.assign("index.html");
+      location.assign("view.html");
     } catch (error) {
       alert("Failed to create todo!");
       return;

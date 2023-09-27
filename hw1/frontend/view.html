@@ -14,6 +14,7 @@
   <body>
     <h1>View</h1>
     <button id="add-new" onclick="editdiary()">編輯</button>
+    <button id="add-new" onclick="gotohome()">回首頁</button>
     <div>
         <p class="todo-title">todo 1</p>
         <p class="todo-label">todo 1</p>
@@ -26,5 +27,8 @@
   function editdiary() {
     sessionStorage.setItem( "save-status" , "old" );
     location.assign("edit.html");
+  }
+  function gotohome() {
+    location.assign("index.html");
   }
 </script>
