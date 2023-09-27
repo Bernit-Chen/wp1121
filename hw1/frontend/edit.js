@@ -7,25 +7,39 @@ const instance = axios.create({
 });
 
 async function main() {
-  // setupEventListeners();
+  console.log(sessionStorage.getItem ( "save-status" )) ;
+  //setdefault
+  setupEventListeners();
   try {
     const todos = await getTodos();
-    todos.forEach((todo) => renderTodo(todo));
+    // todos.forEach((todo) => renderTodo(todo));
   } catch (error) {
     alert("Failed to load todos!");
   }
 }
 
+// {
+//   const todoInput = document.querySelector("#todo-input");  //date
+//   const labelInput = document.querySelector("#todo-label");  //date
+//   const todoDescriptionInput = document.querySelector(  //content
+//     "#todo-description-input",
+//   );
+//   todoInput.value = ;
+
+// }
+
 function setupEventListeners() {
   const addTodoButton = document.querySelector("#todo-add");
-  const todoInput = document.querySelector("#todo-input");
-  const todoDescriptionInput = document.querySelector(
+  const todoInput = document.querySelector("#todo-input");  //date
+  const labelInput = document.querySelector("#todo-label");
+  const moodInput = document.querySelector("#todo-mood");
+  const todoDescriptionInput = document.querySelector(  //content
     "#todo-description-input",
   );
   addTodoButton.addEventListener("click", async () => {
     const title = todoInput.value;
-    const label ="label";
-    const mood = "mood";
+    const label =labelInput.value;
+    const mood = moodInput.value;
     const description = todoDescriptionInput.value;
     if (!title) {
       alert("Please enter a todo title!");
@@ -37,7 +51,8 @@ function setupEventListeners() {
     }
     try {
       const todo = await createTodo({ title, description,label,mood });
-      renderTodo(todo);
+      location.assign("index.html");
+      //   renderTodo(todo);
     } catch (error) {
       alert("Failed to create todo!");
       return;
@@ -64,7 +79,6 @@ function createTodoElement(todo) {
   const mood = item.querySelector("p.todo-mood");
   mood.innerText = todo.mood;
   container.addEventListener("click",()=>{
-    sessionStorage.setItem( "id" , todo.id );
     location.assign("view.html");
   })
   return item;

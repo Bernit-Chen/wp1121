@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>Edit</title>
+    <link rel="stylesheet" href="style.css" />
+    <script defer src="edit.js"></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.5.0/axios.min.js"
+      integrity="sha512-aoTNnqZcT8B4AmeCFmiSnDlc4Nj/KPaZyB5G7JnOnUEkdNpCZs1LCankiYi01sLTyWy+m2P+W4XM+BuQ3Q4/Dg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+  </head>
+  <body>
+    <h1>Edit</h1>
+    <div id="todo-input-container">
+      <input type="text" id="todo-input" placeholder="Date" tabindex="1" />
+      <button id="todo-add" tabindex="3">儲存</button>
+    </div>
+    <a>學業/人際/社團</a>
+    <input type="text" id="todo-label"/>
+    <br>
+    <a>快樂/生氣/難過</a>
+    <input type="text" id="todo-mood"/>
+    <textarea
+      id="todo-description-input"
+      placeholder="Content"
+      tabindex="2"
+    ></textarea>
+    <section id="todos"></section>
+    <button id="cancel" onclick="canceltoindex()">cancel</button>
+  </body>
+</html>
+<script>
+    function canceltoindex() {
+      location.assign("index.html");
+    }
+  </script>

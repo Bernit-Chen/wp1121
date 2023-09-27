@@ -1,5 +1,5 @@
 /* global axios */
-const itemTemplate = document.querySelector("#todo-item-template");
+const itemTemplate = document.querySelector("view-template");
 const todoList = document.querySelector("#todos");
 
 const instance = axios.create({
@@ -8,12 +8,33 @@ const instance = axios.create({
 
 async function main() {
   // setupEventListeners();
+  
   try {
-    const todos = await getTodos();
-    todos.forEach((todo) => renderTodo(todo));
+    print();
+    // todos.forEach((todo) => renderTodo(todo));
   } catch (error) {
     alert("Failed to load todos!");
   }
+}
+
+async function print(){
+  const diaryId = sessionStorage.getItem ( "id" );
+  const todos = await getTodos();
+  todos.forEach((todo) => {
+    if(todo.id === diaryId) {
+      const title = document.querySelector("p.todo-title");  //date
+      const label = document.querySelector("p.todo-label");
+      const mood = document.querySelector("p.todo-mood");
+      const description = document.querySelector(  //content
+       "p.todo-description",
+      );
+      title.innerText = todo.title;
+      label.innerText = todo.label;
+      mood.innerText = todo.mood;
+      description.innerText = todo.description;
+
+      }
+  });
 }
 
 function setupEventListeners() {
@@ -64,7 +85,6 @@ function createTodoElement(todo) {
   const mood = item.querySelector("p.todo-mood");
   mood.innerText = todo.mood;
   container.addEventListener("click",()=>{
-    sessionStorage.setItem( "id" , todo.id );
     location.assign("view.html");
   })
   return item;
