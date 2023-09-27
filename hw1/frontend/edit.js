@@ -7,7 +7,6 @@ const instance = axios.create({
 });
 
 async function main() {
-  console.log(sessionStorage.getItem ( "save-status" )) ;
   //setdefault
   setupEventListeners();
   try {
@@ -17,30 +16,60 @@ async function main() {
     alert("Failed to load todos!");
   }
 }
+function checkdate(){
+  const todoInput = document.querySelector("#todo-input");
+  // const origindate = todoInput.valuestr.split('.');
+  try {
+    const inputDate = new Date(todoInput.value.split(' ')[0]);
+    // console.log(todoInput.value.split(' ')[0]);
+    inputDate.getDate();
+    inputDate.getMonth();
+    inputDate.getFullYear();
+  }
+  catch(e) {
+    alert("wrong format");
+  }
 
-// {
-//   const todoInput = document.querySelector("#todo-input");  //date
-//   const labelInput = document.querySelector("#todo-label");  //date
-//   const todoDescriptionInput = document.querySelector(  //content
-//     "#todo-description-input",
-//   );
-//   todoInput.value = ;
 
-// }
-
-function setupEventListeners() {
+  // const dateObj = new Date(origindate);
+  // if(1){
+  //   return true;
+  // }else{
+  //   return false;
+  // }
+}
+async function setupEventListeners() {
+  const saveStatus = sessionStorage.getItem ( "save-status" ) ;
+  if(saveStatus !== "new") {
+    const diaryId = sessionStorage.getItem ( "id" );
+    const todos = await getTodos();
+    todos.forEach((todo) => {
+      if(todo.id === diaryId) {
+        const todoInput = document.querySelector("#todo-input");  //date
+        const labelInput = document.querySelector("#todo-label");
+        const moodInput = document.querySelector("#todo-mood");
+        const todoDescriptionInput = document.querySelector(  //content
+          "#todo-description-input",
+        );
+        todoInput.value = todo.title;
+        labelInput.value = todo.label;
+        moodInput.value = todo.mood;
+        todoDescriptionInput.value = todo.description;
+        }
+    });
+  }
   const addTodoButton = document.querySelector("#todo-add");
-  const todoInput = document.querySelector("#todo-input");  //date
-  const labelInput = document.querySelector("#todo-label");
-  const moodInput = document.querySelector("#todo-mood");
-  const todoDescriptionInput = document.querySelector(  //content
+  const todo_Input = document.querySelector("#todo-input");  //date
+  const label_Input = document.querySelector("#todo-label");
+  const mood_Input = document.querySelector("#todo-mood");
+  const todo_DescriptionInput = document.querySelector(  //content
     "#todo-description-input",
   );
   addTodoButton.addEventListener("click", async () => {
-    const title = todoInput.value;
-    const label =labelInput.value;
-    const mood = moodInput.value;
-    const description = todoDescriptionInput.value;
+    const title = todo_Input.value;
+    const label =label_Input.value;
+    const mood = mood_Input.value;
+    const description = todo_DescriptionInput.value;
     if (!title) {
       alert("Please enter a todo title!");
       return;
@@ -49,16 +78,19 @@ function setupEventListeners() {
       alert("Please enter a todo description!");
       return;
     }
+    checkdate();
     try {
-      const todo = await createTodo({ title, description,label,mood });
-      location.assign("index.html");
-      //   renderTodo(todo);
+      if(saveStatus !== "new") {
+        const diary_Id = sessionStorage.getItem ( "id" );
+        const todo = await updateTodoStatus(diary_Id, { title, description,label,mood });
+      }else{
+        const todo = await createTodo({ title, description,label,mood });
+      }
+      // location.assign("index.html");
     } catch (error) {
       alert("Failed to create todo!");
       return;
     }
-    todoInput.value = "";
-    todoDescriptionInput.value = "";
   });
 }
 

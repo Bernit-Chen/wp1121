@@ -14,16 +14,18 @@
   <body>
     <h1>Edit</h1>
     <div id="todo-input-container">
-      <input type="text" id="todo-input" placeholder="Date" tabindex="1" />
+      <a>西元年.月.日 (星期)&nbsp;&nbsp;&nbsp;&nbsp;Ex:2023.09.06 (三)</a>
+      <input type="text" id="todo-input" value="" placeholder="Date" tabindex="1" />
       <button id="todo-add" tabindex="3">儲存</button>
     </div>
     <a>學業/人際/社團</a>
-    <input type="text" id="todo-label"/>
+    <input type="text" id="todo-label" value=""/>
     <br>
     <a>快樂/生氣/難過</a>
-    <input type="text" id="todo-mood"/>
+    <input type="text" id="todo-mood" value=""/>
     <textarea
       id="todo-description-input"
+      value=""
       placeholder="Content"
       tabindex="2"
     ></textarea>
