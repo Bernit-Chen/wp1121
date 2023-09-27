@@ -13,7 +13,7 @@ async function main() {
 
 
 function formatedDate(date) {
-  const d = new Date("2021-03-25");
+  const d = new Date(date);
   const chi = ['日','一','二','三','四','五','六'];
   const dateDay = chi[d.getDay()];
   return date.split('-').join('.')+" ("+dateDay+")";
@@ -88,9 +88,11 @@ async function setupEventListeners() {
         const diary_Id = sessionStorage.getItem ( "id" );
         const todo = await updateTodoStatus(diary_Id, { title:updated, description,label,mood });
         console.log(todo);
+        sessionStorage.setItem( "id" , todo.id );
       }else{
         const todo = await createTodo({ title:updated, description,label,mood });
         console.log(todo);
+        sessionStorage.setItem( "id"  , todo.id );
       }
       location.assign("view.html");
     } catch (error) {
