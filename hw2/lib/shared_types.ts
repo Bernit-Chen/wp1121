@@ -14,6 +14,7 @@ export type CardData = {
   title: string;
   description: string;
   list_id: string;
+  song_link: string;
 };
 
 export type ListData = {

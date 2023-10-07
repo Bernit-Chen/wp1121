@@ -1,5 +1,4 @@
 # Web Programming HW#2
-
 ## Run the app
 
 Follow the instructions in this section to run the app locally.

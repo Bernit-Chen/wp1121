@@ -22,6 +22,7 @@ export const getCards = async (_: Request, res: Response<GetCardsResponse>) => {
       title: card.title,
       description: card.description,
       list_id: card.list_id.toString(),
+      song_link: card.song_link,
     }));
 
     return res.status(200).json(cards);
@@ -49,6 +50,7 @@ export const getCard = async (
       title: card.title,
       description: card.description,
       list_id: card.list_id.toString(),
+      song_link: card.song_link,
     });
   } catch (error) {
     genericErrorHandler(error, res);
@@ -61,7 +63,7 @@ export const createCard = async (
   res: Response<CreateCardResponse | { error: string }>,
 ) => {
   try {
-    const { title, description, list_id } = req.body;
+    const { title, description, list_id ,song_link } = req.body;
 
     // Check if the list exists
     const list = await ListModel.findById(list_id);
@@ -73,6 +75,7 @@ export const createCard = async (
       title,
       description,
       list_id,
+      song_link,
     });
 
     // Add the card to the list
@@ -104,7 +107,7 @@ export const updateCard = async (
 
   try {
     const { id } = req.params;
-    const { title, description, list_id } = req.body;
+    const { title, description, list_id , song_link} = req.body;
 
     // Check if the card exists
     const oldCard = await CardModel.findById(id);
@@ -127,6 +130,7 @@ export const updateCard = async (
         title,
         description,
         list_id,
+        song_link,
       },
       { new: true },
     );

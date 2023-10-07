@@ -9,9 +9,10 @@ export type CardProps = {
   title: string;
   description: string;
   listId: string;
+  song_link: string;
 };
 
-export default function Card({ id, title, description, listId }: CardProps) {
+export default function Card({ id, title, description, listId , song_link }: CardProps) {
   const [open, setOpen] = useState(false);
 
   const handleClickOpen = () => {
@@ -32,6 +33,7 @@ export default function Card({ id, title, description, listId }: CardProps) {
         title={title}
         description={description}
         listId={listId}
+        song_link={song_link}
         cardId={id}
       />
     </>

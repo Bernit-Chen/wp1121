@@ -31,7 +31,7 @@ function App() {
             onClick={() => setNewListDialogOpen(true)}
           >
             <AddIcon className="mr-2" />
-            Add a list
+            Add
           </Button>
         </div>
         <NewListDialog

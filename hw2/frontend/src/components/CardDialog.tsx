@@ -34,6 +34,7 @@ type EditCardDialogProps = {
   cardId: string;
   title: string;
   description: string;
+  song_link: string;
 };
 
 type CardDialogProps = NewCardDialogProps | EditCardDialogProps;
@@ -42,11 +43,12 @@ export default function CardDialog(props: CardDialogProps) {
   const { variant, open, onClose, listId } = props;
   const title = variant === "edit" ? props.title : "";
   const description = variant === "edit" ? props.description : "";
+  const song_link = variant === "edit" ? props.song_link : "";
 
   const [editingTitle, setEditingTitle] = useState(variant === "new");
-  const [editingDescription, setEditingDescription] = useState(
-    variant === "new",
-  );
+  const [editingDescription, setEditingDescription] = useState(variant === "new",);
+  const [editingSongLink, setEditingSongLink] = useState(variant === "new",);
+
 
   // using a state variable to store the value of the input, and update it on change is another way to get the value of a input
   // however, this method is not recommended for large forms, as it will cause a re-render on every change
@@ -54,6 +56,7 @@ export default function CardDialog(props: CardDialogProps) {
   const [newTitle, setNewTitle] = useState(title);
   const [newDescription, setNewDescription] = useState(description);
   const [newListId, setNewListId] = useState(listId);
+  const [newSongLink, setNewSongLink] = useState(song_link);
 
   const { lists, fetchCards } = useCards();
 
@@ -64,16 +67,19 @@ export default function CardDialog(props: CardDialogProps) {
   const handleSave = async () => {
     try {
       if (variant === "new") {
+        console.log(newTitle,newDescription,listId,newSongLink);
         await createCard({
           title: newTitle,
           description: newDescription,
           list_id: listId,
+          song_link: newSongLink,
         });
       } else {
         if (
           newTitle === title &&
           newDescription === description &&
-          newListId === listId
+          newListId === listId &&
+          newSongLink === song_link
         ) {
           return;
         }
@@ -83,6 +89,7 @@ export default function CardDialog(props: CardDialogProps) {
           title: newTitle,
           description: newDescription,
           list_id: newListId,
+          song_link: newSongLink,
         });
       }
       fetchCards();
@@ -173,6 +180,30 @@ export default function CardDialog(props: CardDialogProps) {
             className="w-full rounded-md p-2 hover:bg-white/10"
           >
             <Typography className="text-start">{newDescription}</Typography>
+          </button>
+        )}
+        {editingSongLink ? (
+          <ClickAwayListener
+            onClickAway={() => {
+              if (variant === "edit") {
+                setEditingSongLink(false);
+              }
+            }}
+          >
+            <textarea
+              className="bg-white/0 p-2"
+              autoFocus
+              defaultValue={song_link}
+              placeholder="Add a more detailed songLink..."
+              onChange={(e) => setNewSongLink(e.target.value)}
+            />
+          </ClickAwayListener>
+        ) : (
+          <button
+            onClick={() => setEditingSongLink(true)}
+            className="w-full rounded-md p-2 hover:bg-white/10"
+          >
+            <Typography className="text-start">{newSongLink}</Typography>
           </button>
         )}
         <DialogActions>

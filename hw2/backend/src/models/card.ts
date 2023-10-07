@@ -27,6 +27,10 @@ const CardSchema = new mongoose.Schema<CardDocument>(
       ref: "List",
       required: true,
     },
+    song_link: {
+      type: String,
+      required: true,
+    },
   },
   {
     timestamps: true,
