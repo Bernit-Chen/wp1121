@@ -7,6 +7,7 @@ import CardList from "@/components/CardList";
 import HeaderBar from "@/components/HeaderBar";
 import NewListDialog from "@/components/NewListDialog";
 import useCards from "@/hooks/useCards";
+import Typography from "@mui/material/Typography";
 
 function App() {
   const { lists, fetchLists, fetchCards } = useCards();
@@ -17,13 +18,15 @@ function App() {
     fetchCards();
   }, [fetchCards, fetchLists]);
 
+  console.log(lists)
+
   return (
     <>
       <HeaderBar />
       <main className="mx-auto flex max-h-full flex-row gap-6 px-24 py-12">
-        {lists.map((list) => (
-          <CardList key={list.id} {...list} />
-        ))}
+        <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+          My Playlists
+        </Typography>
         <div>
           <Button
             variant="contained"
@@ -31,7 +34,7 @@ function App() {
             onClick={() => setNewListDialogOpen(true)}
           >
             <AddIcon className="mr-2" />
-            Add
+            Add a playlist
           </Button>
         </div>
         <NewListDialog
@@ -39,6 +42,11 @@ function App() {
           onClose={() => setNewListDialogOpen(false)}
         />
       </main>
+      <div className="mx-auto flex max-h-full flex-row gap-6 px-24 py-12">
+        {lists.map((list) => (
+          <CardList key={list.id} {...list} />
+        ))}
+      </div>
     </>
   );
 }

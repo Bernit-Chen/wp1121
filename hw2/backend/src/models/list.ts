@@ -24,6 +24,10 @@ const ListSchema = new mongoose.Schema<ListDocument>(
         ref: "Card",
       },
     ],
+    introduction: {
+      type: String,
+      required: true,
+    },
   },
   {
     timestamps: true,

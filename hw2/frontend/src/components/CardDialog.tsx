@@ -130,7 +130,7 @@ export default function CardDialog(props: CardDialogProps) {
               defaultValue={title}
               onChange={(e) => setNewTitle(e.target.value)}
               className="grow"
-              placeholder="Enter a title for this card..."
+              placeholder="Enter the Name for this song"
             />
           </ClickAwayListener>
         ) : (
@@ -170,7 +170,7 @@ export default function CardDialog(props: CardDialogProps) {
               className="bg-white/0 p-2"
               autoFocus
               defaultValue={description}
-              placeholder="Add a more detailed description..."
+              placeholder="Enter the singer for this song"
               onChange={(e) => setNewDescription(e.target.value)}
             />
           </ClickAwayListener>
@@ -194,7 +194,7 @@ export default function CardDialog(props: CardDialogProps) {
               className="bg-white/0 p-2"
               autoFocus
               defaultValue={song_link}
-              placeholder="Add a more detailed songLink..."
+              placeholder="Enter a link for this song"
               onChange={(e) => setNewSongLink(e.target.value)}
             />
           </ClickAwayListener>

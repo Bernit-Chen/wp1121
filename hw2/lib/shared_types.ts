@@ -21,6 +21,7 @@ export type ListData = {
   id: string;
   name: string;
   cards: CardData[];
+  introduction: string;
 };
 
 export type GetCardsResponse = CardData[];

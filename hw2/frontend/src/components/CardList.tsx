@@ -16,14 +16,16 @@ import { deleteList, updateList } from "@/utils/client";
 import Card from "./Card";
 import type { CardProps } from "./Card";
 import CardDialog from "./CardDialog";
+import A from './music.jpg'
 
 export type CardListProps = {
   id: string;
   name: string;
   cards: CardProps[];
+  introduction: string;
 };
 
-export default function CardList({ id, name, cards }: CardListProps) {
+export default function CardList({ id, name, cards, introduction }: CardListProps) {
   const [openNewCardDialog, setOpenNewCardDialog] = useState(false);
   const [editingName, setEditingName] = useState(false);
   const { fetchLists } = useCards();
@@ -56,6 +58,9 @@ export default function CardList({ id, name, cards }: CardListProps) {
   return (
     <>
       <Paper className="w-80 p-6">
+      <div>
+        <img src={A} alt='music' width={'150px'}/>
+      </div>
         <div className="flex gap-4">
           {editingName ? (
             <ClickAwayListener onClickAway={handleUpdateName}>
@@ -84,6 +89,31 @@ export default function CardList({ id, name, cards }: CardListProps) {
             </IconButton>
           </div>
         </div>
+
+        <div className="flex gap-4">
+          {editingName ? (
+            <ClickAwayListener onClickAway={handleUpdateName}>
+              <Input
+                autoFocus
+                defaultValue={introduction}
+                className="grow"
+                placeholder="Enter a description for this list..."
+                sx={{ fontSize: "2rem" }}
+                inputRef={inputRef}
+              />
+            </ClickAwayListener>
+          ) : (
+            <button
+              onClick={() => setEditingName(true)}
+              className="w-full rounded-md p-2 hover:bg-white/10"
+            >
+              <Typography className="text-start" variant="h5">
+                {introduction}
+              </Typography>
+            </button>
+          )}
+        </div>
+
         <Divider variant="middle" sx={{ mt: 1, mb: 2 }} />
         <div className="flex flex-col gap-4">
           {cards.map((card) => (
