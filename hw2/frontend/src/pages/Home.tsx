@@ -17,13 +17,17 @@ const Home=() => {
     useEffect(() => {
         fetchLists();
         fetchCards();
-      }, [fetchCards, fetchLists]);
-    
+    }, [fetchCards, fetchLists]);
 
+    const [hide, setHide] = useState(false);
+    function handleHide() {
+        setHide(!hide);
+    }
+  
     return (
         <>
             <main className="mx-auto flex max-h-full flex-row gap-6 px-24 py-12">
-                <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+                <Typography variant="h5" component="div" sx={{ flexGrow: 1 }}>
                     My Playlists
                 </Typography>
                 <div>
@@ -33,17 +37,17 @@ const Home=() => {
                         onClick={() => setNewListDialogOpen(true)}
                     >
                         <AddIcon className="mr-2" />
-                        Add a playlist
+                        Add
                     </Button>
                 </div>
                 <div>
                     <Button
                         variant="contained"
                         className="w-80"
-                        onClick={() => setNewListDialogOpen(true)}
+                        onClick={handleHide}
                     >
-                        <AddIcon className="mr-2" />
-                        Delete the playlist
+                        <a style={{display: hide?"block":"none"}}>Done</a>
+                        <a style={{display: !hide?"block":"none"}}>Delete</a>
                     </Button>
                 </div>
                 <NewListDialog
@@ -51,9 +55,9 @@ const Home=() => {
                     onClose={() => setNewListDialogOpen(false)}
                 />
             </main>
-            <div className="mx-auto flex max-h-full flex-row gap-6 px-24 py-12">
+            <div className="mx-auto flex max-h-full flex-row  flex-wrap gap-6 px-24 py-12" >
                 {lists.map((list) => (
-                <CardList key={list.id} {...list} />
+                <CardList key={list.id} {...list}  hide={hide}/>
                 ))}
             </div>
         </>

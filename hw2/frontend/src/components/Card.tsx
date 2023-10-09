@@ -12,7 +12,14 @@ export type CardProps = {
   song_link: string;
 };
 
-export default function Card({ id, title, description, listId , song_link }: CardProps) {
+export default function Card({ id, title, description, listId , song_link, checked }: {
+  id: string;
+  title: string;
+  description: string;
+  listId: string;
+  song_link: string;
+  checked: boolean;
+}) {
   const [open, setOpen] = useState(false);
 
   const handleClickOpen = () => {

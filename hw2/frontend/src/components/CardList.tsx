@@ -26,16 +26,24 @@ export type CardListProps = {
   introduction: string;
 };
 
-export default function CardList({ id, name, cards, introduction }: CardListProps) {
+export default function CardList({ id, name, cards, introduction, hide }: {
+  id: string;
+  name: string;
+  cards: CardProps[];
+  introduction: string;
+  hide: boolean;
+}) {
   const [openNewCardDialog, setOpenNewCardDialog] = useState(false);
   const [editingName, setEditingName] = useState(false);
+  const [editingIntroduction, setEditingIntroduction] = useState(false);
   const { fetchLists } = useCards();
-  const inputRef = useRef<HTMLInputElement>(null);
+  const inputRef1 = useRef<HTMLInputElement>(null);
+  const inputRef2 = useRef<HTMLInputElement>(null);
 
   const handleUpdateName = async () => {
-    if (!inputRef.current) return;
+    if (!inputRef1.current) return;
 
-    const newName = inputRef.current.value;
+    const newName = inputRef1.current.value;
     if (newName !== name) {
       try {
         await updateList(id, { name: newName });
@@ -45,6 +53,21 @@ export default function CardList({ id, name, cards, introduction }: CardListProp
       }
     }
     setEditingName(false);
+  };
+
+  const handleUpdateIntroduction = async () => {
+    if (!inputRef2.current) return;
+
+    const newIntroduction = inputRef2.current.value;
+    if (newIntroduction !== introduction) {
+      try {
+        await updateList(id, { introduction: newIntroduction });
+        fetchLists();
+      } catch (error) {
+        alert("Error: Failed to update list name");
+      }
+    }
+    setEditingIntroduction(false);
   };
 
   const handleDelete = async () => {
@@ -59,9 +82,18 @@ export default function CardList({ id, name, cards, introduction }: CardListProp
   return (
     <>
       <Paper className="w-80 p-6">
-       <Link to="/View" state={{key_id:id}}>
-          <img src={A} alt='music' width={'150px'}/>
-        </Link>
+        <div className="flex gap-24">
+          <Link to="/View" state={{key_id:id}}>
+            <img src={A} alt='music' width={'150px'}/>
+          </Link>
+          <a style={{display: hide?"block":"none"}}>
+                <IconButton color="error" onClick={handleDelete}>
+                  <DeleteIcon />
+                </IconButton>
+          </a>
+        </div>
+        <a style={{display: hide?"block":"none"}}></a>
+        <div  className="p-2">{cards.length} songs</div>
         <div className="flex gap-4">
           {editingName ? (
             <ClickAwayListener onClickAway={handleUpdateName}>
@@ -71,7 +103,7 @@ export default function CardList({ id, name, cards, introduction }: CardListProp
                 className="grow"
                 placeholder="Enter a new name for this list..."
                 sx={{ fontSize: "2rem" }}
-                inputRef={inputRef}
+                inputRef={inputRef1}
               />
             </ClickAwayListener>
           ) : (
@@ -85,27 +117,24 @@ export default function CardList({ id, name, cards, introduction }: CardListProp
             </button>
           )}
           <div className="grid place-items-center">
-            <IconButton color="error" onClick={handleDelete}>
-              <DeleteIcon />
-            </IconButton>
           </div>
         </div>
-
+      
         <div className="flex gap-4">
-          {editingName ? (
-            <ClickAwayListener onClickAway={handleUpdateName}>
+          {editingIntroduction ? (
+            <ClickAwayListener onClickAway={handleUpdateIntroduction}>
               <Input
                 autoFocus
                 defaultValue={introduction}
                 className="grow"
                 placeholder="Enter a description for this list..."
                 sx={{ fontSize: "2rem" }}
-                inputRef={inputRef}
+                inputRef={inputRef2}
               />
             </ClickAwayListener>
           ) : (
             <button
-              onClick={() => setEditingName(true)}
+              onClick={() => setEditingIntroduction(true)}
               className="w-full rounded-md p-2 hover:bg-white/10"
             >
               <Typography className="text-start" variant="h5">
@@ -118,7 +147,7 @@ export default function CardList({ id, name, cards, introduction }: CardListProp
         <Divider variant="middle" sx={{ mt: 1, mb: 2 }} />
         <div className="flex flex-col gap-4">
           {cards.map((card) => (
-            <Card key={card.id} {...card} />
+            <Card key={card.id} {...card} checked={true}/>
           ))}
           <Button
             variant="contained"

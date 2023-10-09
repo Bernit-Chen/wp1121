@@ -3,11 +3,7 @@
 
 Follow the instructions in this section to run the app locally.
 
-### 1.
-```bash
-npm i react-router react-router-dom
-```
-### 2. setup backend `.env`
+### 1. setup backend `.env`
 
 Start by copying the `.env.example` file to `.env`.
 
@@ -23,7 +19,7 @@ PORT=8000
 MONGO_URL="mongodb+srv://<username>:<password>@<cluster>.example.mongodb.net/?retryWrites=true&w=majority"
 ```
 
-### 3. setup frontend `.env`
+### 2. setup frontend `.env`
 
 Start by copying the `.env.example` file to `.env`.
 
@@ -38,7 +34,7 @@ Then, fill in the `VITE_API_URL` field in `.env` with the url of your backend se
 VITE_API_URL="http://localhost:8000/api"
 ```
 
-### 4. start the backend server
+### 3. start the backend server
 
 ```bash
 cd backend
@@ -46,7 +42,7 @@ yarn add -D vite
 yarn dev
 ```
 
-### 5. start the frontend server
+### 4. start the frontend server
 
 ```bash
 cd frontend

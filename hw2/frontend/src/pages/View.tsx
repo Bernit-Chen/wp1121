@@ -4,8 +4,7 @@ import { Add as AddIcon } from "@mui/icons-material";
 import { Button } from "@mui/material";
 
 import CardList from "@/components/CardList";
-import Card from "@/components/Card";
-import type { CardListProps } from "@/components/CardList";
+import A from '@/components/music.jpg';
 import NewListDialog from "@/components/NewListDialog";
 import useCards from "@/hooks/useCards";
 import Typography from "@mui/material/Typography";
@@ -23,14 +22,26 @@ const View=() => {
     const location = useLocation();
     const {key_id} = location.state;
 
+    let i=-1;
+    lists.forEach((list,j)=>{
+        if(list.id===key_id) i=j;
+    });
+
     return (
         <>
-            <main className="mx-auto flex max-h-full flex-row gap-6 px-24 py-12">
-                <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-                    {key_id}
-                </Typography>
-                <div>
+            <div className="mx-auto flex flex-start max-h-full px-24 py-12">
+                <img src={A} alt='music' width={'200px'}/>
+                <div className="mx-auto max-h-full gap-6 px-24 py-1">
+                    <Typography variant="h3" component="div" sx={{ flexGrow: 1 }}>
+                        {lists[i].name}
+                    </Typography>
+                    <br/>
+                    <Typography variant="h5" component="div" sx={{ flexGrow: 1 }}>
+                        {lists[i].introduction}
+                    </Typography>
                 </div>
+            </div>
+            <div className="mx-auto flex flex-end max-h-full gap-8 px-24 py-12">
                 <div>
                     <Button
                         variant="contained"
@@ -55,12 +66,8 @@ const View=() => {
                     open={newListDialogOpen}
                     onClose={() => setNewListDialogOpen(false)}
                 />
-            </main>
-            <div className="mx-auto flex max-h-full flex-row gap-6 px-24 py-12">
-                {lists.map((list) => (
-                <CardList key={list.id} {...list} />
-                ))}
             </div>
+            <CardList key={lists[i].id} {...lists[i]} hide={false}/>
         </>
     );
 }
