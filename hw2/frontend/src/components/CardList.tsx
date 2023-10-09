@@ -16,7 +16,8 @@ import { deleteList, updateList } from "@/utils/client";
 import Card from "./Card";
 import type { CardProps } from "./Card";
 import CardDialog from "./CardDialog";
-import A from './music.jpg'
+import A from './music.jpg';
+import {Link} from "react-router-dom";
 
 export type CardListProps = {
   id: string;
@@ -58,9 +59,9 @@ export default function CardList({ id, name, cards, introduction }: CardListProp
   return (
     <>
       <Paper className="w-80 p-6">
-      <div>
-        <img src={A} alt='music' width={'150px'}/>
-      </div>
+       <Link to="/View" state={{key_id:id}}>
+          <img src={A} alt='music' width={'150px'}/>
+        </Link>
         <div className="flex gap-4">
           {editingName ? (
             <ClickAwayListener onClickAway={handleUpdateName}>
