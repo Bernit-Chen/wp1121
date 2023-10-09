@@ -94,6 +94,7 @@ export default function CardList({ id, name, cards, introduction, hide }: {
         </div>
         <a style={{display: hide?"block":"none"}}></a>
         <div  className="p-2">{cards.length} songs</div>
+        
         <div className="flex gap-4">
           {editingName ? (
             <ClickAwayListener onClickAway={handleUpdateName}>
@@ -116,8 +117,6 @@ export default function CardList({ id, name, cards, introduction, hide }: {
               </Typography>
             </button>
           )}
-          <div className="grid place-items-center">
-          </div>
         </div>
       
         <div className="flex gap-4">
