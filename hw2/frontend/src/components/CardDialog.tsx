@@ -24,6 +24,10 @@ type NewCardDialogProps = {
   open: boolean;
   onClose: () => void;
   listId: string;
+  allchecked:boolean;
+  setAllchecked:(value: React.SetStateAction<boolean>) => void;
+  deletedsong: string[];
+  setDeletedsong:(value: React.SetStateAction<string[]>) => void;
 };
 
 type EditCardDialogProps = {
@@ -35,12 +39,16 @@ type EditCardDialogProps = {
   title: string;
   description: string;
   song_link: string;
+  allchecked:boolean;
+  setAllchecked:(value: React.SetStateAction<boolean>) => void;
+  deletedsong: string[];
+  setDeletedsong:(value: React.SetStateAction<string[]>) => void;
 };
 
 type CardDialogProps = NewCardDialogProps | EditCardDialogProps;
 
 export default function CardDialog(props: CardDialogProps) {
-  const { variant, open, onClose, listId } = props;
+  const { variant, open, onClose, listId,allchecked,setAllchecked,deletedsong , setDeletedsong} = props;
   const title = variant === "edit" ? props.title : "";
   const description = variant === "edit" ? props.description : "";
   const song_link = variant === "edit" ? props.song_link : "";
@@ -50,9 +58,6 @@ export default function CardDialog(props: CardDialogProps) {
   const [editingSongLink, setEditingSongLink] = useState(variant === "new",);
 
 
-  // using a state variable to store the value of the input, and update it on change is another way to get the value of a input
-  // however, this method is not recommended for large forms, as it will cause a re-render on every change
-  // you can read more about it here: https://react.dev/reference/react-dom/components/input#controlling-an-input-with-a-state-variable
   const [newTitle, setNewTitle] = useState(title);
   const [newDescription, setNewDescription] = useState(description);
   const [newListId, setNewListId] = useState(listId);
@@ -83,8 +88,7 @@ export default function CardDialog(props: CardDialogProps) {
         ) {
           return;
         }
-        // typescript is smart enough to know that if variant is not "new", then it must be "edit"
-        // therefore props.cardId is a valid value
+        
         await updateCard(props.cardId, {
           title: newTitle,
           description: newDescription,
@@ -92,8 +96,11 @@ export default function CardDialog(props: CardDialogProps) {
           song_link: newSongLink,
         });
       }
+      setAllchecked(false);
+      setDeletedsong([]);
       fetchCards();
-    } catch (error) {
+    } 
+    catch (error) {
       alert("Error: Failed to save card");
     } finally {
       handleClose();

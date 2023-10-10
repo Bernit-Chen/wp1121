@@ -142,20 +142,6 @@ export default function CardList({ id, name, cards, introduction, hide }: {
             </button>
           )}
         </div>
-
-        <Divider variant="middle" sx={{ mt: 1, mb: 2 }} />
-        <div className="flex flex-col gap-4">
-          {cards.map((card) => (
-            <Card key={card.id} {...card} checked={true}/>
-          ))}
-          <Button
-            variant="contained"
-            onClick={() => setOpenNewCardDialog(true)}
-          >
-            <AddIcon className="mr-2" />
-            Add a card
-          </Button>
-        </div>
       </Paper>
       <CardDialog
         variant="new"

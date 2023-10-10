@@ -3,23 +3,31 @@ import { useEffect, useState, useRef } from "react";
 import { Add as AddIcon } from "@mui/icons-material";
 import { Button } from "@mui/material";
 
-import CardList from "@/components/CardList";
+import Viewcard from "@/components/Viewcard";
 import A from '@/components/music.jpg';
-import NewListDialog from "@/components/NewListDialog";
+import CardDialog from "@/components/CardDialog";
+import SongDialog from "@/components/SongDialog";
 import ClickAwayListener from "@mui/material/ClickAwayListener";
 import Input from "@mui/material/Input";
 import useCards from "@/hooks/useCards";
 import Typography from "@mui/material/Typography";
 import { useLocation } from 'react-router-dom';
 import { updateList } from "@/utils/client";
+import * as React from 'react';
 
 const View=() => {
     const { lists, fetchLists, fetchCards } = useCards();
-    const [newListDialogOpen, setNewListDialogOpen] = useState(false);
+    const [openNewCardDialog, setOpenNewCardDialog] = useState(false);
+    const [deleteCardDialog, setDeleteNewCardDialog] = useState(false);
     const [editingName, setEditingName] = useState(false);
     const [editingIntroduction, setEditingIntroduction] = useState(false);
     const inputRef1 = useRef<HTMLInputElement>(null);
     const inputRef2 = useRef<HTMLInputElement>(null);
+    const [deletedsong, setDeletedsong] = useState<string[]>([]);
+    const [allchecked, setAllchecked] = React.useState(false);
+    const [songhide, setSonghide] = useState(false);
+    const [message, setMessage] = useState("");
+
 
     useEffect(() => {
         fetchLists();
@@ -47,9 +55,9 @@ const View=() => {
           }
         }
         setEditingName(false);
-      };
+    };
     
-      const handleUpdateIntroduction = async () => {
+    const handleUpdateIntroduction = async () => {
         if (!inputRef2.current) return;
     
         const newIntroduction = inputRef2.current.value;
@@ -63,8 +71,7 @@ const View=() => {
         }
         setEditingIntroduction(false);
       };
-
-
+    
     return (
         <>
             <div className="mx-auto flex flex-start max-h-full px-24 py-12">
@@ -122,36 +129,58 @@ const View=() => {
                 <div>
                     <Button
                         variant="contained"
-                        className="w-80"
-                        onClick={() => setNewListDialogOpen(true)}
-                    >
+                        onClick={() => setOpenNewCardDialog(true)}
+                        >
                         <AddIcon className="mr-2" />
-                        Add Song
+                        Add a Song
                     </Button>
                 </div>
                 <div>
                     <Button
                         variant="contained"
-                        className="w-80"
-                        onClick={() => setNewListDialogOpen(true)}
+                        onClick={() => {
+                            let pre_message = ""
+                            lists.forEach((list) => {
+                                if(list.id === key_id) {
+                                    list.cards.forEach((card) => {
+                                        if(deletedsong.includes(card.id)) {
+                                            pre_message += (card.title+"  "+card.description+"  "+card.song_link+"\n")
+                                        }
+                                    });
+                                }
+                            });
+                            setMessage(pre_message);
+                            setDeleteNewCardDialog(true)
+                        }}
                     >
-                        Delete Song
+                        Delete a Song
                     </Button>
                 </div>
-                <NewListDialog
-                    open={newListDialogOpen}
-                    onClose={() => setNewListDialogOpen(false)}
+                <CardDialog
+                    variant="new"
+                    open={openNewCardDialog}
+                    onClose={() => setOpenNewCardDialog(false)}
+                    listId={key_id}
+                    allchecked={allchecked} 
+                    setAllchecked={setAllchecked}
+                    deletedsong={deletedsong}
+                    setDeletedsong={setDeletedsong}
+                />
+                <SongDialog
+                    open={deleteCardDialog}
+                    onClose={() => setDeleteNewCardDialog(false)}
+                    listId={key_id}
+                    allchecked={allchecked} 
+                    setAllchecked={setAllchecked}
+                    deletedsong={deletedsong}
+                    setDeletedsong={setDeletedsong}
+                    songhide={songhide}
+                    setSonghide={setSonghide}
+                    message={message}
                 />
             </div>
-
-
-
-
-
-
-
             
-            <CardList key={lists[i].id} {...lists[i]} hide={false}/>
+            <Viewcard key={lists[i].id} {...lists[i]} hide={false}  allchecked={allchecked} setAllchecked={setAllchecked} deletedsong={deletedsong} setDeletedsong={setDeletedsong}/>
         </>
     );
 }
