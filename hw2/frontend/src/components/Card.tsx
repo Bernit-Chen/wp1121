@@ -54,9 +54,13 @@ export default function Card({ id, title, description, listId , song_link , allc
           onChange={handleChange}
           inputProps={{ 'aria-label': 'controlled' }}
         />
-          <div>somg : {title}</div>
-          <div>singer : {description}</div>
-          <div>link : {song_link}</div>
+          <div className="flex flex-wrap">song : {title}</div>
+          <div className="flex flex-wrap">singer : {description}</div>
+          <div className="flex flex-wrap">
+            <a href={song_link} target='_blank' rel="noopener">
+              link : {song_link}
+            </a>
+          </div>
           <button onClick={handleClickOpen} className="text-start">
             Edit
           </button>

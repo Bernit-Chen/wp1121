@@ -71,12 +71,15 @@ export default function Viewcard({ id, name, cards, introduction, hide, allcheck
   return (
     <>
       <Divider variant="middle" sx={{ mt: 1, mb: 2 }} />
-        <Checkbox
-          checked={allchecked}
-          onChange={handleAllChange}
-          inputProps={{ 'aria-label': 'controlled' }}
-        />
-        <div className="flex flex-col gap-4">
+        <div className="flex flex-wrap gap-4"> 
+          <Checkbox
+            checked={allchecked}
+            onChange={handleAllChange}
+            inputProps={{ 'aria-label': 'controlled' }}
+          />
+          <h5>Click All</h5>
+        </div>
+        <div className="flex flex-wrap flex-col gap-4">
           {cards.map((card) => (
             <>
               <Card key={card.id} {...card} allchecked={allchecked} setAllchecked={setAllchecked} deletedsong={deletedsong} setDeletedsong={setDeletedsong} />

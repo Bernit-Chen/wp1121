@@ -62,6 +62,7 @@ export default function CardDialog(props: CardDialogProps) {
   const [newDescription, setNewDescription] = useState(description);
   const [newListId, setNewListId] = useState(listId);
   const [newSongLink, setNewSongLink] = useState(song_link);
+  const [addNewSong, setAddNewSong] = useState(listId);
 
   const { lists, fetchCards } = useCards();
 
@@ -83,18 +84,28 @@ export default function CardDialog(props: CardDialogProps) {
         if (
           newTitle === title &&
           newDescription === description &&
-          newListId === listId &&
+          addNewSong === listId &&
           newSongLink === song_link
         ) {
           return;
         }
+        else if(addNewSong===listId){
+          await updateCard(props.cardId, {
+            title: newTitle,
+            description: newDescription,
+            list_id: listId,
+            song_link: newSongLink,
+          });
+        }
+        else{
+          await createCard({
+            title: newTitle,
+            description: newDescription,
+            list_id: addNewSong,
+            song_link: newSongLink,
+          });
+        }
         
-        await updateCard(props.cardId, {
-          title: newTitle,
-          description: newDescription,
-          list_id: newListId,
-          song_link: newSongLink,
-        });
       }
       setAllchecked(false);
       setDeletedsong([]);
@@ -145,19 +156,9 @@ export default function CardDialog(props: CardDialogProps) {
             onClick={() => setEditingTitle(true)}
             className="w-full rounded-md p-2 hover:bg-white/10"
           >
-            <Typography className="text-start">{newTitle}</Typography>
+            <Typography className="text-start">Song : {newTitle}</Typography>
           </button>
         )}
-        <Select
-          value={newListId}
-          onChange={(e) => setNewListId(e.target.value)}
-        >
-          {lists.map((list) => (
-            <MenuItem value={list.id} key={list.id}>
-              {list.name}
-            </MenuItem>
-          ))}
-        </Select>
         {variant === "edit" && (
           <IconButton color="error" onClick={handleDelete}>
             <DeleteIcon />
@@ -186,7 +187,7 @@ export default function CardDialog(props: CardDialogProps) {
             onClick={() => setEditingDescription(true)}
             className="w-full rounded-md p-2 hover:bg-white/10"
           >
-            <Typography className="text-start">{newDescription}</Typography>
+            <Typography className="text-start">Singer : {newDescription}</Typography>
           </button>
         )}
         {editingSongLink ? (
@@ -210,9 +211,25 @@ export default function CardDialog(props: CardDialogProps) {
             onClick={() => setEditingSongLink(true)}
             className="w-full rounded-md p-2 hover:bg-white/10"
           >
-            <Typography className="text-start">{newSongLink}</Typography>
+            <Typography className="text-start">Link : {newSongLink}</Typography>
           </button>
         )}
+        <h1><br/>Add to other list :<br/></h1>
+        <Select
+          value={addNewSong}
+          label="Playlist"
+          onChange={(e) =>{
+            setAddNewSong(e.target.value);
+            console.log(addNewSong)
+          }}
+        >
+          {lists.map((list) => (
+            <MenuItem value={list.id} key={list.id}>
+              {list.name}
+            </MenuItem>
+          ))}
+        </Select>
+
         <DialogActions>
           <Button onClick={handleSave}>save</Button>
           <Button onClick={handleClose}>close</Button>

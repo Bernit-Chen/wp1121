@@ -95,7 +95,7 @@ const View=() => {
                                 className="w-full rounded-md p-2 hover:bg-white/10"
                             >
                                 <Typography className="text-start" variant="h4">
-                                    {lists[i].name}
+                                    Name : {lists[i].name}
                                 </Typography>
                             </button>
                         )}
@@ -118,7 +118,7 @@ const View=() => {
                                 className="w-full rounded-md p-2 hover:bg-white/10"
                             >
                                 <Typography className="text-start" variant="h5">
-                                    {lists[i].introduction}
+                                    Description : {lists[i].introduction}
                                 </Typography>
                             </button>
                         )}
@@ -144,7 +144,7 @@ const View=() => {
                                 if(list.id === key_id) {
                                     list.cards.forEach((card) => {
                                         if(deletedsong.includes(card.id)) {
-                                            pre_message += (card.title+"  "+card.description+"  "+card.song_link+"\n")
+                                            pre_message += "Name : "+(card.title+"   Description : "+card.description+"   Link : "+card.song_link+"\n")
                                         }
                                     });
                                 }
