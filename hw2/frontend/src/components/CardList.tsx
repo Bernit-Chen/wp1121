@@ -36,19 +36,28 @@ export default function CardList({ id, name, cards, introduction, hide }: {
   const [openNewCardDialog, setOpenNewCardDialog] = useState(false);
   const [editingName, setEditingName] = useState(false);
   const [editingIntroduction, setEditingIntroduction] = useState(false);
-  const { fetchLists } = useCards();
+  const { lists,fetchLists } = useCards();
   const inputRef1 = useRef<HTMLInputElement>(null);
   const inputRef2 = useRef<HTMLInputElement>(null);
 
   const handleUpdateName = async () => {
     if (!inputRef1.current) return;
-
-
     const newName = inputRef1.current.value;
     if(newName===''){
-      alert("Please Enter song name");
+      alert("Please Enter playlist name");
       return;
     }
+    let c:boolean;
+    c=false;
+    for (let i = 0; i < lists.length; i++) {
+      if(lists[i].name===newName && newName!==name){
+        alert("Please Enter another playlist name");
+        c=true;
+        return;
+      } 
+    }
+    if(c) return;
+    console.log("yes")
     if (newName !== name) {
       try {
         await updateList(id, { name: newName });
@@ -65,7 +74,7 @@ export default function CardList({ id, name, cards, introduction, hide }: {
 
     const newIntroduction = inputRef2.current.value;
     if(newIntroduction===''){
-      alert("Please Enter song description");
+      alert("Please Enter playlist description");
       return;
     }
     if (newIntroduction !== introduction) {
@@ -102,7 +111,7 @@ export default function CardList({ id, name, cards, introduction, hide }: {
           </a>
         </div>
         <a style={{display: hide?"block":"none"}}></a>
-        <div  className="p-2">{cards.length} songs</div>
+        <div  className="break-all p-2">{cards.length} songs</div>
         
         <div className="flex gap-4">
           {editingName ? (
@@ -122,7 +131,7 @@ export default function CardList({ id, name, cards, introduction, hide }: {
               className="w-full rounded-md p-2 hover:bg-white/10"
             >
               
-              <Typography className="text-start" variant="h4">
+              <Typography className="break-all text-start" variant="h4">
                 {name}
               </Typography>
             </button>
@@ -146,7 +155,7 @@ export default function CardList({ id, name, cards, introduction, hide }: {
               onClick={() => setEditingIntroduction(true)}
               className="w-full rounded-md p-2 hover:bg-white/10"
             >
-              <Typography className="text-start" variant="h6">
+              <Typography className="break-all text-start" variant="h6">
                 {introduction}
               </Typography>
             </button>

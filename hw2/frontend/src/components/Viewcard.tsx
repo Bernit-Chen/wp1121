@@ -79,7 +79,7 @@ export default function Viewcard({ id, name, cards, introduction, hide, allcheck
           />
           <h5>Click All</h5>
         </div>
-        <div className="flex flex-wrap flex-col gap-4">
+        <div className="flex break-all flex-wrap flex-col gap-4">
           {cards.map((card) => (
             <>
               <Card key={card.id} {...card} allchecked={allchecked} setAllchecked={setAllchecked} deletedsong={deletedsong} setDeletedsong={setDeletedsong} />

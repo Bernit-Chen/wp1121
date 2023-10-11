@@ -20,9 +20,17 @@ export default function NewListDialog({ open, onClose }: NewListDialogProps) {
   // another way is to use a state variable and update it on change, which can be found in CardDialog.tsx
   const textfieldRef1 = useRef<HTMLInputElement>(null);
   const textfieldRef2 = useRef<HTMLInputElement>(null);
-  const { fetchLists } = useCards();
+  const { lists,fetchLists } = useCards();
 
   const handleAddList = async () => {
+    
+    for (let k = 0; k < lists.length; k++) {
+      if(lists[k].name===textfieldRef1.current?.value){
+          alert("Please Enter another playlist name");
+          onClose();
+          return;
+      } 
+    }
     try {
       await createList({
         name: textfieldRef1.current?.value ?? "",

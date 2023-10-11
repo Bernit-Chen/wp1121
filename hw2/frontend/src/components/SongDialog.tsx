@@ -79,19 +79,19 @@ export default function SongDialog(props: EditSongDialogProps) {
 
 
   return (
-    <Dialog open={open} onClose={handleClose}>
-      <DialogContent className="w-[600px]">
-        <a style={{display: songhide?"block":"none"}}>Please Click Song</a>
-        <a style={{display: !songhide?"block":"none"}}>
-          <div className="flex flex-col gap-4" style={{ whiteSpace: 'pre-wrap' }}>
+    <Dialog className="break-all"open={open} onClose={handleClose}>
+      <DialogContent className="break-all">
+        <a className="break-all" style={{display: songhide?"block":"none"}}>Please Click Song</a>
+        <a className="break-all" style={{display: !songhide?"block":"none"}}>
+          <div className="flex break-all flex-col gap-4" style={{ whiteSpace: 'pre-wrap' }}>
             {message}
           </div>
           <br/>
-          Are you sure to delete?
+          <div className="break-all">Are you sure to delete?</div>
         </a>
-        <DialogActions>
-          <Button style={{display: !songhide?"block":"none"}} onClick={handleDelete}>Confirm</Button>
-          <Button onClick={handleClose}>Cancel</Button>
+        <DialogActions className="break-all">
+          <Button className="flex wrabreak-all" style={{display: !songhide?"block":"none"}} onClick={handleDelete}>Confirm</Button>
+          <Button className="break-all" onClick={handleClose}>Cancel</Button>
         </DialogActions>
       </DialogContent>
     </Dialog>

@@ -29,14 +29,14 @@ const Home=() => {
   
     return (
         <>
-            <main className="mx-auto flex max-h-full flex-row gap-6 px-24 py-12">
-                <Typography variant="h5" component="div" sx={{ flexGrow: 1 }}>
+            <main className="break-all mx-auto flex max-h-full flex-row gap-6 px-24 py-12">
+                <Typography className="break-all" variant="h5" component="div" sx={{ flexGrow: 1 }}>
                     My Playlists
                 </Typography>
                 <div>
                     <Button
                         variant="contained"
-                        className="w-80"
+                        className="break-all"
                         onClick={() => setNewListDialogOpen(true)}
                     >
                         <AddIcon className="mr-2" />
@@ -46,7 +46,7 @@ const Home=() => {
                 <div>
                     <Button
                         variant="contained"
-                        className="w-80"
+                        className="break-all"
                         onClick={handleHide}
                     >
                         <a style={{display: hide?"block":"none"}}>Done</a>

@@ -47,9 +47,19 @@ const View=() => {
     
         const newName = inputRef1.current.value;
         if(newName===''){
-            alert("Please Enter song name");
+            alert("Please Enter playlist name");
             return;
-          }
+        }
+        let c:boolean;
+        c=false;
+        for (let k = 0; k < lists.length; k++) {
+            if(lists[k].name===newName && k!==i){
+                alert("Please Enter another playlist name");
+                c=true;
+                return;
+            } 
+        }
+        if(c) return;
         if (newName !== lists[i].name) {
           try {
             await updateList(lists[i].id, { name: newName });
@@ -66,9 +76,10 @@ const View=() => {
     
         const newIntroduction = inputRef2.current.value;
         if(newIntroduction===''){
-            alert("Please Enter song description");
+            alert("Please Enter playlist description");
             return;
-          }
+        }
+        console.log("yes2")
         if (newIntroduction !== lists[i].introduction) {
           try {
             await updateList(lists[i].id, { introduction: newIntroduction });
@@ -82,16 +93,16 @@ const View=() => {
     
     return (
         <>
-            <div className="mx-auto flex flex-start max-h-full px-24 py-12">
-                <img src={A} alt='music' width={'200px'}/>
-                <div className="mx-auto max-h-full gap-6 px-24 py-1">
-                    <div className="flex gap-4">
+            <div className="mx-auto break-all flex flex-start max-h-full px-24 py-12">
+                <img className="break-all" src={A} alt='music' width={'100px'}/>
+                <div className="break-all mx-auto max-h-full gap-6 px-24 py-1">
+                    <div className="break-all flex gap-4">
                         {editingName ? (
                             <ClickAwayListener onClickAway={handleUpdateName}>
                                 <Input
                                     autoFocus
                                     defaultValue={lists[i].name}
-                                    className="grow"
+                                    className="grow break-all"
                                     placeholder="Enter a new name for this list..."
                                     sx={{ fontSize: "2rem" }}
                                     inputRef={inputRef1}
@@ -100,21 +111,21 @@ const View=() => {
                         ) : (
                             <button
                                 onClick={() => setEditingName(true)}
-                                className="w-full rounded-md p-2 hover:bg-white/10"
+                                className="w-full break-all rounded-md p-2 hover:bg-white/10"
                             >
-                                <Typography className="text-start" variant="h4">
+                                <Typography className="break-all" variant="h4">
                                     Name : {lists[i].name}
                                 </Typography>
                             </button>
                         )}
                     </div>
-                    <div className="flex gap-4">
+                    <div className="break-all flex gap-4">
                         {editingIntroduction ? (
                             <ClickAwayListener onClickAway={handleUpdateIntroduction}>
                                 <Input
                                     autoFocus
                                     defaultValue={lists[i].introduction}
-                                    className="grow"
+                                    className="grow break-all"
                                     placeholder="Enter a description for this list..."
                                     sx={{ fontSize: "2rem" }}
                                     inputRef={inputRef2}
@@ -125,7 +136,7 @@ const View=() => {
                                 onClick={() => setEditingIntroduction(true)}
                                 className="w-full rounded-md p-2 hover:bg-white/10"
                             >
-                                <Typography className="text-start" variant="h5">
+                                <Typography className="break-all" variant="h5">
                                     Description : {lists[i].introduction}
                                 </Typography>
                             </button>
@@ -139,8 +150,7 @@ const View=() => {
                         variant="contained"
                         onClick={() => setOpenNewCardDialog(true)}
                         >
-                        <AddIcon className="mr-2" />
-                        Add a Song
+                        <div className='break-all'> Add a Song</div>
                     </Button>
                 </div>
                 <div>
@@ -161,7 +171,7 @@ const View=() => {
                             setDeleteNewCardDialog(true)
                         }}
                     >
-                        Delete a Song
+                        <div className='break-all'> Delete Song</div>
                     </Button>
                 </div>
                 <CardDialog

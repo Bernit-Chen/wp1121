@@ -82,9 +82,25 @@ export default function CardDialog(props: CardDialogProps) {
     console.log(variant);
     if(newTitle==='' ||newDescription===''||addNewSong===''||newSongLink===''){
         alert("Please Enter song information");
-
         return;
     }
+    let c:boolean;
+    c=false;
+    for (let k = 0; k < lists.length; k++) {
+      for (let z=0; z<lists[k].cards.length;z++){
+        if(lists[k].cards[z].title===newTitle && variant === "new"){
+          alert("Please Enter another song name");
+          c=true;
+          return;
+        } 
+        if(lists[k].cards[z].title===newTitle && variant === "edit" && newTitle!==title){
+          alert("Please Enter another song name");
+          c=true;
+          return;
+        } 
+      }
+    }
+    if(c) return;
     try {
       if (variant === "new") {
         console.log(newTitle,newDescription,listId,newSongLink);
@@ -161,8 +177,8 @@ export default function CardDialog(props: CardDialogProps) {
   };
 
   return (
-    <Dialog open={open} onClose={handleClose}>
-      <DialogTitle className="flex gap-4">
+    <Dialog  className="break-all" open={open} onClose={handleClose}>
+      <DialogTitle className="break-all flex flex-wrap text-wrap gap-4">
         {editingTitle ? (
           <ClickAwayListener
             onClickAway={() => {
@@ -175,25 +191,20 @@ export default function CardDialog(props: CardDialogProps) {
               autoFocus
               defaultValue={newTitle}
               onChange={(e) => setNewTitle(e.target.value)}
-              className="grow"
+              className="grow break-all "
               placeholder="Enter the Name for this song"
             />
           </ClickAwayListener>
         ) : (
           <button
             onClick={() => setEditingTitle(true)}
-            className="w-full rounded-md p-2 hover:bg-white/10"
+            className="break-all w-full rounded-md p-2 hover:bg-white/10"
           >
-            <Typography className="text-start">Song : {newTitle}</Typography>
+            <Typography className="break-all ">Song : {newTitle}</Typography>
           </button>
         )}
-        {variant === "edit" && (
-          <IconButton color="error" onClick={handleDelete}>
-            <DeleteIcon />
-          </IconButton>
-        )}
       </DialogTitle>
-      <DialogContent className="w-[600px]">
+      <DialogContent className="break-all flex flex-wrap text-wrap gap-4">
         {editingDescription ? (
           <ClickAwayListener
             onClickAway={() => {
@@ -203,7 +214,7 @@ export default function CardDialog(props: CardDialogProps) {
             }}
           >
             <textarea
-              className="bg-white/0 p-2"
+              className="grow break-all bg-white/0 p-2"
               autoFocus
               defaultValue={newDescription}
               placeholder="Enter the singer for this song"
@@ -215,7 +226,7 @@ export default function CardDialog(props: CardDialogProps) {
             onClick={() => setEditingDescription(true)}
             className="w-full rounded-md p-2 hover:bg-white/10"
           >
-            <Typography className="text-start">Singer : {newDescription}</Typography>
+            <Typography className="break-all">Singer : {newDescription}</Typography>
           </button>
         )}
         {editingSongLink ? (
@@ -227,7 +238,7 @@ export default function CardDialog(props: CardDialogProps) {
             }}
           >
             <textarea
-              className="bg-white/0 p-2"
+              className="break-all bg-white/0 p-2"
               autoFocus
               defaultValue={newSongLink}
               placeholder="Enter a link for this song"
@@ -237,13 +248,14 @@ export default function CardDialog(props: CardDialogProps) {
         ) : (
           <button
             onClick={() => setEditingSongLink(true)}
-            className="w-full rounded-md p-2 hover:bg-white/10"
+            className="break-all w-full rounded-md p-2 hover:bg-white/10"
           >
-            <Typography className="text-start">Link : {newSongLink}</Typography>
+            <Typography className="break-all">Link : {newSongLink}</Typography>
           </button>
         )}
         <h1><br/>Add to other list :<br/></h1>
         <Select
+          className="break-all"
           value={addNewSong}
           label="Playlist"
           onChange={(e) =>{
@@ -252,7 +264,7 @@ export default function CardDialog(props: CardDialogProps) {
           }}
         >
           {lists.map((list) => (
-            <MenuItem value={list.id} key={list.id}>
+            <MenuItem className="break-all" value={list.id} key={list.id}>
               {list.name}
             </MenuItem>
           ))}
