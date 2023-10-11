@@ -1,21 +1,16 @@
 import { useState } from "react";
 
-import { Delete as DeleteIcon } from "@mui/icons-material";
+
 import Button from "@mui/material/Button";
-import ClickAwayListener from "@mui/material/ClickAwayListener";
+
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
-import DialogTitle from "@mui/material/DialogTitle";
-import IconButton from "@mui/material/IconButton";
-import Input from "@mui/material/Input";
-import MenuItem from "@mui/material/MenuItem";
-import Select from "@mui/material/Select";
-import Typography from "@mui/material/Typography";
-import Card from "./Card";
+
+
 import useCards from "@/hooks/useCards";
-import { createCard, deleteCard, updateCard } from "@/utils/client";
-import CardProps from "./Card";
+import {  deleteCard } from "@/utils/client";
+
 
 type EditSongDialogProps = {
   open: boolean;
@@ -31,7 +26,7 @@ type EditSongDialogProps = {
 };
 
 export default function SongDialog(props: EditSongDialogProps) {
-  const { open, onClose, listId, allchecked, setAllchecked, deletedsong, setDeletedsong, songhide, setSonghide,message} = props;
+  const { open, onClose, setAllchecked, deletedsong, songhide, setSonghide,message} = props;
   const { lists, fetchCards } = useCards();
   const [ candelete, setCandelete ] = useState(false);
 
@@ -40,8 +35,8 @@ export default function SongDialog(props: EditSongDialogProps) {
   };
 
   const handleDelete = async () => {
-    console.log(deletedsong);
     if (deletedsong.length===0) {
+      setCandelete(candelete);
       setCandelete(true);
       return;
     }
@@ -62,7 +57,6 @@ export default function SongDialog(props: EditSongDialogProps) {
     try {
       await deleteCard(del_id);
       fetchCards();
-      console.log("delete "+del_id);
       return true;
     } catch (error) {
       alert("Error: Failed to delete card");

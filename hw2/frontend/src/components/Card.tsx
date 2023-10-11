@@ -32,7 +32,7 @@ export default function Card({ id, title, description, listId , song_link , allc
   const [checked, setChecked] = React.useState(false);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-      console.log(checked);
+      setChecked(checked);
       setChecked(event.target.checked);
       if (deletedsong.includes(id)){
         setDeletedsong(deletedsong.filter(function (letter) {

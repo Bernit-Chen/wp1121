@@ -1,10 +1,9 @@
 import { useRef, useState } from "react";
 
-import AddIcon from "@mui/icons-material/Add";
 import DeleteIcon from "@mui/icons-material/Delete";
-import Button from "@mui/material/Button";
+
 import ClickAwayListener from "@mui/material/ClickAwayListener";
-import Divider from "@mui/material/Divider";
+
 import IconButton from "@mui/material/IconButton";
 import Input from "@mui/material/Input";
 import Paper from "@mui/material/Paper";
@@ -13,9 +12,9 @@ import Typography from "@mui/material/Typography";
 import useCards from "@/hooks/useCards";
 import { deleteList, updateList } from "@/utils/client";
 
-import Card from "./Card";
+
 import type { CardProps } from "./Card";
-import CardDialog from "./CardDialog";
+
 import A from './music.jpg';
 import {Link} from "react-router-dom";
 
@@ -33,7 +32,7 @@ export default function CardList({ id, name, cards, introduction, hide }: {
   introduction: string;
   hide: boolean;
 }) {
-  const [openNewCardDialog, setOpenNewCardDialog] = useState(false);
+ 
   const [editingName, setEditingName] = useState(false);
   const [editingIntroduction, setEditingIntroduction] = useState(false);
   const { lists,fetchLists } = useCards();
@@ -57,7 +56,7 @@ export default function CardList({ id, name, cards, introduction, hide }: {
       } 
     }
     if(c) return;
-    console.log("yes")
+    
     if (newName !== name) {
       try {
         await updateList(id, { name: newName });

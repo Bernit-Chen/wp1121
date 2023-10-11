@@ -1,6 +1,5 @@
 import { useEffect, useState, useRef } from "react";
 
-import { Add as AddIcon } from "@mui/icons-material";
 import { Button } from "@mui/material";
 
 import Viewcard from "@/components/Viewcard";
@@ -79,7 +78,7 @@ const View=() => {
             alert("Please Enter playlist description");
             return;
         }
-        console.log("yes2")
+        
         if (newIntroduction !== lists[i].introduction) {
           try {
             await updateList(lists[i].id, { introduction: newIntroduction });
