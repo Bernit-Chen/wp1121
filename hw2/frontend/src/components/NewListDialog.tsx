@@ -30,7 +30,7 @@ export default function NewListDialog({ open, onClose }: NewListDialogProps) {
       });
       fetchLists();
     } catch (error) {
-      alert("Error: Failed to create list");
+      alert("Please Enter playlist information");
     } finally {
       onClose();
     }

@@ -7,6 +7,9 @@ import CardList from "@/components/CardList";
 import NewListDialog from "@/components/NewListDialog";
 import useCards from "@/hooks/useCards";
 import Typography from "@mui/material/Typography";
+import * as React from 'react';
+import Box from '@mui/material/Box';
+import TextField from '@mui/material/TextField';
 
 
 
@@ -55,6 +58,16 @@ const Home=() => {
                     onClose={() => setNewListDialogOpen(false)}
                 />
             </main>
+            <Box
+                component="form"
+                sx={{
+                    '& > :not(style)': { m: 1, width: '25ch' },
+                }}
+                noValidate
+                autoComplete="off"
+            >
+            <TextField id="standard-basic" label="Search" variant="standard" />
+            </Box>
             <div className="mx-auto flex max-h-full flex-row  flex-wrap gap-6 px-24 py-12" >
                 {lists.map((list) => (
                 <CardList key={list.id} {...list}  hide={hide}/>

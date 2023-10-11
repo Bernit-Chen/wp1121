@@ -15,6 +15,7 @@ import Typography from "@mui/material/Typography";
 
 import useCards from "@/hooks/useCards";
 import { createCard, deleteCard, updateCard } from "@/utils/client";
+import { error } from "console";
 
 // this pattern is called discriminated type unions
 // you can read more about it here: https://www.typescriptlang.org/docs/handbook/2/narrowing.html#discriminated-unions
@@ -67,19 +68,43 @@ export default function CardDialog(props: CardDialogProps) {
   const { lists, fetchCards } = useCards();
 
   const handleClose = () => {
+      setNewTitle(title);
+      setNewDescription(description);
+      setNewSongLink(song_link);
     onClose();
   };
 
+  const newhandleClose = () => {
+  onClose();
+};
+
   const handleSave = async () => {
+    console.log(variant);
+    if(newTitle==='' ||newDescription===''||addNewSong===''||newSongLink===''){
+        alert("Please Enter song information");
+
+        return;
+    }
     try {
       if (variant === "new") {
         console.log(newTitle,newDescription,listId,newSongLink);
         await createCard({
           title: newTitle,
           description: newDescription,
-          list_id: listId,
+          list_id: addNewSong,
           song_link: newSongLink,
         });
+        if(addNewSong!==listId){
+          await createCard({
+            title: newTitle,
+            description: newDescription,
+            list_id: listId,
+            song_link: newSongLink,
+          });
+        }
+        setNewTitle("");
+        setNewDescription('');
+        setNewSongLink('');
       } else {
         if (
           newTitle === title &&
@@ -96,6 +121,7 @@ export default function CardDialog(props: CardDialogProps) {
             list_id: listId,
             song_link: newSongLink,
           });
+          
         }
         else{
           await createCard({
@@ -110,11 +136,13 @@ export default function CardDialog(props: CardDialogProps) {
       setAllchecked(false);
       setDeletedsong([]);
       fetchCards();
+      console.log(lists)
     } 
-    catch (error) {
-      alert("Error: Failed to save card");
-    } finally {
-      handleClose();
+    catch(e) {
+      console.log(e);
+    }
+    finally {
+      newhandleClose();
     }
   };
 
@@ -145,7 +173,7 @@ export default function CardDialog(props: CardDialogProps) {
           >
             <Input
               autoFocus
-              defaultValue={title}
+              defaultValue={newTitle}
               onChange={(e) => setNewTitle(e.target.value)}
               className="grow"
               placeholder="Enter the Name for this song"
@@ -177,7 +205,7 @@ export default function CardDialog(props: CardDialogProps) {
             <textarea
               className="bg-white/0 p-2"
               autoFocus
-              defaultValue={description}
+              defaultValue={newDescription}
               placeholder="Enter the singer for this song"
               onChange={(e) => setNewDescription(e.target.value)}
             />
@@ -201,7 +229,7 @@ export default function CardDialog(props: CardDialogProps) {
             <textarea
               className="bg-white/0 p-2"
               autoFocus
-              defaultValue={song_link}
+              defaultValue={newSongLink}
               placeholder="Enter a link for this song"
               onChange={(e) => setNewSongLink(e.target.value)}
             />

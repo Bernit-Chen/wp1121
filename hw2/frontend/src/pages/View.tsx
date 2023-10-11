@@ -46,6 +46,10 @@ const View=() => {
         if (!inputRef1.current) return;
     
         const newName = inputRef1.current.value;
+        if(newName===''){
+            alert("Please Enter song name");
+            return;
+          }
         if (newName !== lists[i].name) {
           try {
             await updateList(lists[i].id, { name: newName });
@@ -61,6 +65,10 @@ const View=() => {
         if (!inputRef2.current) return;
     
         const newIntroduction = inputRef2.current.value;
+        if(newIntroduction===''){
+            alert("Please Enter song description");
+            return;
+          }
         if (newIntroduction !== lists[i].introduction) {
           try {
             await updateList(lists[i].id, { introduction: newIntroduction });

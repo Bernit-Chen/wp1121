@@ -43,7 +43,12 @@ export default function CardList({ id, name, cards, introduction, hide }: {
   const handleUpdateName = async () => {
     if (!inputRef1.current) return;
 
+
     const newName = inputRef1.current.value;
+    if(newName===''){
+      alert("Please Enter song name");
+      return;
+    }
     if (newName !== name) {
       try {
         await updateList(id, { name: newName });
@@ -59,6 +64,10 @@ export default function CardList({ id, name, cards, introduction, hide }: {
     if (!inputRef2.current) return;
 
     const newIntroduction = inputRef2.current.value;
+    if(newIntroduction===''){
+      alert("Please Enter song description");
+      return;
+    }
     if (newIntroduction !== introduction) {
       try {
         await updateList(id, { introduction: newIntroduction });
@@ -112,6 +121,7 @@ export default function CardList({ id, name, cards, introduction, hide }: {
               onClick={() => setEditingName(true)}
               className="w-full rounded-md p-2 hover:bg-white/10"
             >
+              
               <Typography className="text-start" variant="h4">
                 {name}
               </Typography>
@@ -136,19 +146,13 @@ export default function CardList({ id, name, cards, introduction, hide }: {
               onClick={() => setEditingIntroduction(true)}
               className="w-full rounded-md p-2 hover:bg-white/10"
             >
-              <Typography className="text-start" variant="h5">
+              <Typography className="text-start" variant="h6">
                 {introduction}
               </Typography>
             </button>
           )}
         </div>
       </Paper>
-      <CardDialog
-        variant="new"
-        open={openNewCardDialog}
-        onClose={() => setOpenNewCardDialog(false)}
-        listId={id}
-      />
     </>
   );
 }

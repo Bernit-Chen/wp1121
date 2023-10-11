@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Paper } from "@mui/material";
 import CardDialog from "./CardDialog";
+import Typography from "@mui/material/Typography";
 import * as React from 'react';
 import Checkbox from '@mui/material/Checkbox';
 
@@ -48,19 +49,15 @@ export default function Card({ id, title, description, listId , song_link , allc
 
   return (
     <>
-      <Paper className="flex w-full flex-wrap gap-6 p-2" elevation={6}>
+      <Paper className="flex flex-wrap text-wrap gap-6 p-2 w-full">
         <Checkbox
           checked={deletedsong.includes(id)}
           onChange={handleChange}
           inputProps={{ 'aria-label': 'controlled' }}
         />
-          <div className="flex flex-wrap">song : {title}</div>
-          <div className="flex flex-wrap">singer : {description}</div>
-          <div className="flex flex-wrap">
-            <a href={song_link} target='_blank' rel="noopener">
-              link : {song_link}
-            </a>
-          </div>
+          <p className="break-all">Song : {title}</p>
+          <p className="break-all">singer : {description}</p>
+          <p className="break-all">link : {song_link}</p>
           <button onClick={handleClickOpen} className="text-start">
             Edit
           </button>
