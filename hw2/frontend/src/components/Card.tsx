@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { Paper } from "@mui/material";
 import CardDialog from "./CardDialog";
-import Typography from "@mui/material/Typography";
 import * as React from 'react';
+import {Link} from "react-router-dom";
 import Checkbox from '@mui/material/Checkbox';
 
 export type CardProps = {
@@ -32,6 +32,7 @@ export default function Card({ id, title, description, listId , song_link , allc
   const [checked, setChecked] = React.useState(false);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+      console.log(checked);
       setChecked(event.target.checked);
       if (deletedsong.includes(id)){
         setDeletedsong(deletedsong.filter(function (letter) {
@@ -44,7 +45,7 @@ export default function Card({ id, title, description, listId , song_link , allc
       else{
         setDeletedsong(deletedsong.concat([id]));
       }
-      console.log(deletedsong);
+      
   };
 
   return (
@@ -57,7 +58,7 @@ export default function Card({ id, title, description, listId , song_link , allc
         />
           <p className="break-all">Song : {title}</p>
           <p className="break-all">singer : {description}</p>
-          <p className="break-all">link : {song_link}</p>
+          <Link target='_blank' to={song_link} className="break-all">link : {song_link}</Link>
           <button onClick={handleClickOpen} className="text-start">
             Edit
           </button>

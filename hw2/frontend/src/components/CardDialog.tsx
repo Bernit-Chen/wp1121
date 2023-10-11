@@ -49,7 +49,7 @@ type EditCardDialogProps = {
 type CardDialogProps = NewCardDialogProps | EditCardDialogProps;
 
 export default function CardDialog(props: CardDialogProps) {
-  const { variant, open, onClose, listId,allchecked,setAllchecked,deletedsong , setDeletedsong} = props;
+  const { variant, open, onClose, listId,setAllchecked, setDeletedsong} = props;
   const title = variant === "edit" ? props.title : "";
   const description = variant === "edit" ? props.description : "";
   const song_link = variant === "edit" ? props.song_link : "";
@@ -61,7 +61,7 @@ export default function CardDialog(props: CardDialogProps) {
 
   const [newTitle, setNewTitle] = useState(title);
   const [newDescription, setNewDescription] = useState(description);
-  const [newListId, setNewListId] = useState(listId);
+ 
   const [newSongLink, setNewSongLink] = useState(song_link);
   const [addNewSong, setAddNewSong] = useState(listId);
 
@@ -79,7 +79,7 @@ export default function CardDialog(props: CardDialogProps) {
 };
 
   const handleSave = async () => {
-    console.log(variant);
+    
     if(newTitle==='' ||newDescription===''||addNewSong===''||newSongLink===''){
         alert("Please Enter song information");
         return;
@@ -103,7 +103,7 @@ export default function CardDialog(props: CardDialogProps) {
     if(c) return;
     try {
       if (variant === "new") {
-        console.log(newTitle,newDescription,listId,newSongLink);
+        
         await createCard({
           title: newTitle,
           description: newDescription,
@@ -152,29 +152,17 @@ export default function CardDialog(props: CardDialogProps) {
       setAllchecked(false);
       setDeletedsong([]);
       fetchCards();
-      console.log(lists)
+      
     } 
     catch(e) {
-      console.log(e);
+      
     }
     finally {
       newhandleClose();
     }
   };
 
-  const handleDelete = async () => {
-    if (variant !== "edit") {
-      return;
-    }
-    try {
-      await deleteCard(props.cardId);
-      fetchCards();
-    } catch (error) {
-      alert("Error: Failed to delete card");
-    } finally {
-      handleClose();
-    }
-  };
+  
 
   return (
     <Dialog  className="break-all" open={open} onClose={handleClose}>
@@ -260,7 +248,7 @@ export default function CardDialog(props: CardDialogProps) {
           label="Playlist"
           onChange={(e) =>{
             setAddNewSong(e.target.value);
-            console.log(addNewSong)
+            
           }}
         >
           {lists.map((list) => (
