@@ -82,7 +82,7 @@ yarn lint
 ```
 
 
-## about My Diary
+## about My HW2
 
 ### 除 "作業內容（Pass）" 額外的功能
 
