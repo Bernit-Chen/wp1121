@@ -2,6 +2,7 @@
 ## Run the app
 
 Follow the instructions in this section to run the app locally.
+### 請清空自己的 MongoDB !!!
 
 ### 1. setup backend `.env`
 
