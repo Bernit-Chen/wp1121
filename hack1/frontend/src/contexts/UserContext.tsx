@@ -41,8 +41,8 @@ export const UserProvider = ({ children }: PropsWithChildren) => {
   /*            https://github.com/remix-run/history/blob/main/docs/api-reference.md#location */
 
   useEffect(()=>{
-    if(location.pathname !== "./login" && location.pathname!=="./register"){
-      if(!authenticated) navigate('/login');
+    if(!authenticated && location.pathname !== "./login" && location.pathname!=="./register"){
+     navigate('/login');
     }
   },[authenticated])
   /* Reminder: Don't import this useEffect hook if you are tired of being redirected to the login page. */

@@ -73,11 +73,13 @@ const AuthLayout = () => {
               <TabsTrigger
                 asChild
                 key={tab.title}
-                value=""
+                value={location.pathname}
                 className="last-of-type:border-r-0"
                 data-testid={`tab-${tab.path}`}
               >
-                <NavLink to="" />
+                <NavLink to={location.pathname} >
+                  {tab.title}
+                </NavLink>
               </TabsTrigger>
               /* End of TODO 1.3 */
             ))}
@@ -115,7 +117,11 @@ const AuthLayout = () => {
                 type="text"
                 name="username"
                 autoComplete="username"
+                placeholder="Enter Username"
+                tabIndex={1}
+                value={username}
               />
+              
               {/* End of TODO 1.4 */}
             </div>
             <div className="flex flex-col gap-2">
@@ -131,6 +137,9 @@ const AuthLayout = () => {
                 type="password"
                 name="password"
                 autoComplete="current-password"
+                placeholder="Enter Password"
+                tabIndex={1}
+                value={password}
               />
               {/* End of TODO 1.4 */}
             </div>
