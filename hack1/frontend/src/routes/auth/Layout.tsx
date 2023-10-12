@@ -121,6 +121,7 @@ const AuthLayout = () => {
                 tabIndex={1}
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
+
               />
               
               {/* End of TODO 1.4 */}
