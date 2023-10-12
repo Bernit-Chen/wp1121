@@ -92,7 +92,7 @@ const AuthLayout = () => {
             {/* The logo should be vscoddit.svg in the public folder. */}
             {/* The logo should have alt text "VSCoddit Logo". */}
             {/* The title should be "VSCoddit" */}
-            <img data-testid="header-logo" className="h-5 w-5 brightness-200" src="/public/vscoddit.svg" alt="VSCoddit Logo" width="25" />
+            <img data-testid="header-logo" className="h-5 w-5 brightness-200" src="/public/vscoddit.svg" alt="VSCoddit Logo" />
             <span data-testid="header-title" >VSCoddit</span>
             {/* END of TODO 1.1 */}
           </CardTitle>
@@ -120,6 +120,7 @@ const AuthLayout = () => {
                 placeholder="Enter Username"
                 tabIndex={1}
                 value={username}
+                onChange={(e) => setUsername(e.target.value)}
               />
               
               {/* End of TODO 1.4 */}
@@ -140,6 +141,7 @@ const AuthLayout = () => {
                 placeholder="Enter Password"
                 tabIndex={1}
                 value={password}
+                onChange={(e) => setPassword(e.target.value)}
               />
               {/* End of TODO 1.4 */}
             </div>
