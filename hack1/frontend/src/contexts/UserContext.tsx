@@ -10,6 +10,7 @@ import { AxiosError } from 'axios';
 import { useToast } from '@/components/ui/use-toast';
 import { UserService } from '@/services/userService';
 
+
 type UserContextType = {
   user: User | null;
   authenticated: boolean;
@@ -38,7 +39,7 @@ export const UserProvider = ({ children }: PropsWithChildren) => {
   /* Reference: https://reactrouter.com/en/6.16.0/hooks/use-navigate */
   /*            https://reactrouter.com/en/6.16.0/hooks/use-location */
   /*            https://github.com/remix-run/history/blob/main/docs/api-reference.md#location */
-
+  
   /* Reminder: Don't import this useEffect hook if you are tired of being redirected to the login page. */
   /* Warning: But remember to add it back before submitting your work. */
   /* End of TODO 1.2 */
