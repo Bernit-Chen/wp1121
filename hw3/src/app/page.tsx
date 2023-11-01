@@ -1,3 +1,4 @@
+
 import { eq, desc, isNull, sql } from "drizzle-orm";
 
 import NameDialog from "@/components/NameDialog";
@@ -6,6 +7,9 @@ import TweetInput from "@/components/TweetInput";
 import { Separator } from "@/components/ui/separator";
 import { db } from "@/db";
 import { likesTable, tweetsTable, usersTable } from "@/db/schema";
+import ProfileButton from "@/components/ProfileButton";
+import SwitchUser from "@/components/SwitchUser";
+import { useRouter } from "next/navigation";
 
 type HomePageProps = {
   searchParams: {
@@ -138,6 +142,10 @@ export default async function Home({
     <>
       <div className="flex h-screen w-full max-w-2xl flex-col overflow-scroll pt-2">
         <h1 className="mb-2 bg-white px-4 text-xl font-bold">Home</h1>
+        <div className="flex justify-between">
+          <ProfileButton />
+          <SwitchUser />
+        </div>
         <div className="w-full px-4 pt-3">
           <TweetInput />
         </div>
