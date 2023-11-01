@@ -12,7 +12,6 @@ const View = (): React.ReactNode => {
   /* Hint 2.2.1: Link page index to React state */
   const [selectedIndex, setSelectedIndex] = useState<number>(0);
   const post = getPostByIndex(0);
-
   
   /* End (1/3) TODO 2.2 */
 
@@ -21,7 +20,6 @@ const View = (): React.ReactNode => {
   /* Hint 2.2.5: Refer to `PostContext` for more clue */
   const handleNextClick = useCallback(() => {}, []);
   const handlePrevClick = useCallback(() => {}, []);
-  
   /* End (3/3) TODO 2.2 */
 
   /* (1/3) TODO 2.4: Handle Voting for Unvoted Posts (8%) */
