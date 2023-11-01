@@ -9,7 +9,6 @@ import { db } from "@/db";
 import { likesTable, tweetsTable, usersTable } from "@/db/schema";
 import ProfileButton from "@/components/ProfileButton";
 import SwitchUser from "@/components/SwitchUser";
-import { useRouter } from "next/navigation";
 
 type HomePageProps = {
   searchParams: {

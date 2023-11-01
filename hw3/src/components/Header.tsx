@@ -1,5 +1,4 @@
 import {
-  Home,
   Search,
 } from "lucide-react";
 
@@ -12,7 +11,6 @@ export default function Header() {
     // aside is a semantic html tag for side content
     <aside className="flex h-screen flex-col justify-between px-6 py-6">
       <div className="flex flex-col gap-2">
-        <HeaderButton Icon={Home} text="Home" active />
         <HeaderButton Icon={Search} text="Search" />
       </div>
       <ProfileButton />

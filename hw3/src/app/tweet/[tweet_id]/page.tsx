@@ -10,7 +10,7 @@ import {
 import LikeButton from "@/components/LikeButton";
 import ReplyInput from "@/components/ReplyInput";
 import TimeText from "@/components/TimeText";
-import Tweet from "@/components/Tweet";
+import Reply from "@/components/Reply";
 import { Separator } from "@/components/ui/separator";
 import { db } from "@/db";
 import { likesTable, tweetsTable, usersTable } from "@/db/schema";
@@ -222,10 +222,11 @@ export default async function TweetPage({
           </div>
           <Separator />
         </div>
+        
         <ReplyInput replyToTweetId={tweet.id} replyToHandle={tweet.handle} />
         <Separator />
         {replies.map((reply) => (
-          <Tweet
+          <Reply
             key={reply.id}
             id={reply.id}
             username={username}
