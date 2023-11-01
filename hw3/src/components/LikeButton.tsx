@@ -67,6 +67,8 @@ export default function LikeButton({
         )}
       >
         <CheckSquare size={30} />
+        {!liked && "I want to join"}
+        {liked && "I have joined"}
       </div>
     </button>
     <div
@@ -76,7 +78,7 @@ export default function LikeButton({
         )}
       >
         {likesCount}人參加
-        {likesCount == 0 && "Join it ?"}
+        {!liked && "Join it ?"}
       </div>
     </>
   );
