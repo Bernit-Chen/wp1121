@@ -4,6 +4,8 @@ import { Separator } from "@/components/ui/separator";
 import { getAvatar } from "@/lib/utils";
 
 import LikeButton from "./LikeButton";
+import { Check } from 'lucide-react';
+import { X } from 'lucide-react';
 import TimeText from "./TimeText";
 
 type TweetProps = {
@@ -45,11 +47,6 @@ export default function Tweet({
       >
         <div className="flex gap-4">
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src={getAvatar(authorName)}
-            alt="avatar"
-            className="h-12 w-12 rounded-full"
-          />
           <article className="flex grow flex-col">
             <p className="font-bold">
               {authorName}
@@ -62,13 +59,9 @@ export default function Tweet({
             </p>
             {/* `white-space: pre-wrap` tells html to render \n and \t chracters  */}
             <article className="mt-2 whitespace-pre-wrap">{content}</article>
-            <div className="my-2 flex items-center justify-between gap-4 text-gray-400">
-              <LikeButton
-                initialLikes={likes}
-                initialLiked={liked}
-                tweetId={id}
-                handle={handle}
-              />
+            <div className="my-2 flex items-center justify-between gap-12 text-blue-400">
+              <div>{liked ? <Check size={30} />:<X size={30} />}</div>
+              <div>{likes>0 ? likes : 0}人參加</div>
             </div>
           </article>
         </div>

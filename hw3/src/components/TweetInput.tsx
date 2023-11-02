@@ -2,10 +2,7 @@
 
 import { useRef } from "react";
 
-import { ChevronDown } from "lucide-react";
-
 import GrowingTextarea from "@/components/GrowingTextarea";
-import UserAvatar from "@/components/UserAvatar";
 import { Separator } from "@/components/ui/separator";
 import useTweet from "@/hooks/useTweet";
 import useUserInfo from "@/hooks/useUserInfo";

@@ -8,7 +8,6 @@ import useUserInfo from "@/hooks/useUserInfo";
 
 export default function ProfileButton() {
   const { username, handle } = useUserInfo();
-  const router = useRouter();
 
   return (
     <button

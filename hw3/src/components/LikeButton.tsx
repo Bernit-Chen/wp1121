@@ -78,7 +78,6 @@ export default function LikeButton({
         )}
       >
         {likesCount}人參加
-        {!liked && "Join it ?"}
       </div>
     </>
   );
