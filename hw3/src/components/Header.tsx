@@ -1,5 +1,5 @@
 import {
-  Search,
+  Circle,
 } from "lucide-react";
 
 import { cn } from "@/lib/utils";
@@ -11,7 +11,7 @@ export default function Header() {
     // aside is a semantic html tag for side content
     <aside className="flex h-screen flex-col justify-between px-6 py-6">
       <div className="flex flex-col gap-2">
-        <HeaderButton Icon={Search} text="Search" />
+        <HeaderButton Icon={Circle} text="Join Me" />
       </div>
       <ProfileButton />
     </aside>
@@ -36,7 +36,7 @@ function HeaderButton({ Icon, text, active }: HeaderButtonProps) {
         // prefix a class with hover: to make it only apply when the element is hovered
         className="flex w-fit items-center gap-4 rounded-full p-2 transition-colors duration-300 group-hover:bg-gray-200 lg:pr-4"
       >
-        <div className="grid h-[40px] w-[40px] place-items-center">
+        <div className="grid h-[40px] w-[40px] place-items-center text-yellow-400">
           <Icon
             // now that we defined the interface for Icon, we can pass in the size and strokeWidth props safely
             size={26}

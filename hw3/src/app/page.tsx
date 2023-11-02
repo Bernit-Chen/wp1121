@@ -9,6 +9,7 @@ import { db } from "@/db";
 import { likesTable, tweetsTable, usersTable } from "@/db/schema";
 import ProfileButton from "@/components/ProfileButton";
 import SwitchUser from "@/components/SwitchUser";
+import Search from "@/components/Search";
 
 type HomePageProps = {
   searchParams: {
@@ -146,6 +147,7 @@ export default async function Home({
           <SwitchUser />
         </div>
         <div className="w-full px-4 pt-3">
+          <Search />
           <TweetInput />
         </div>
         <Separator />
