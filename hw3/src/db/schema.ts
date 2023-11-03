@@ -44,6 +44,7 @@ export const tweetsTable = pgTable(
   {
     id: serial("id").primaryKey(),
     content: varchar("content", { length: 280 }).notNull(),
+    startTime: varchar("startTime", { length: 50 }),
     userHandle: varchar("user_handle", { length: 50 })
       .notNull()
       // this is a foreign key constraint. It ensures that the user_handle

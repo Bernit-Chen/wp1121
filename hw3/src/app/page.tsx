@@ -147,10 +147,12 @@ export default async function Home({
           <SwitchUser />
         </div>
         <div className="w-full px-4 pt-3">
-          <Search />
           <TweetInput />
+          <Search />
         </div>
+        <br/>
         <Separator />
+
         {tweets.map((tweet) => (
           <Tweet
             key={tweet.id}

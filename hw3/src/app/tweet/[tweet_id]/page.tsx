@@ -69,10 +69,12 @@ export default async function TweetPage({
       content: tweetsTable.content,
       userHandle: tweetsTable.userHandle,
       createdAt: tweetsTable.createdAt,
+      startTime:  tweetsTable.startTime
     })
     .from(tweetsTable)
     .where(eq(tweetsTable.id, tweet_id_num))
     .execute();
+
 
   // Although typescript thinks tweetData is not undefined, it is possible
   // that tweetData is undefined. This can happen if the tweet doesn't exist.
@@ -130,6 +132,7 @@ export default async function TweetPage({
     handle: user.handle,
     likes: numLikes,
     createdAt: tweetData.createdAt,
+    startTime: tweetData.startTime,
     liked: Boolean(liked),
   };
 
@@ -207,6 +210,7 @@ export default async function TweetPage({
           </div>
           <article className="mt-3 whitespace-pre-wrap text-xl">
             {tweet.content}
+            {tweet.startTime}
           </article>
           <time className="my-4 block text-sm text-gray-500">
             <TimeText date={tweet.createdAt} format="h:mm A · D MMM YYYY" />

@@ -68,6 +68,7 @@ export default function NameDialog() {
     // not null or undefined.
     params.set("username", username!);
     params.set("handle", handle!);
+    params.set("search", searchParams.get("search")!);
     router.push(`${pathname}?${params.toString()}`);
     setDialogOpen(false);
 

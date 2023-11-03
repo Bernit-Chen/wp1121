@@ -10,10 +10,12 @@ export default function useTweet() {
     handle,
     content,
     replyToTweetId,
+    startTime,
   }: {
     handle: string;
     content: string;
     replyToTweetId?: number;
+    startTime?: string;
   }) => {
     setLoading(true);
 
@@ -23,6 +25,7 @@ export default function useTweet() {
         handle,
         content,
         replyToTweetId,
+        startTime,
       }),
     });
 

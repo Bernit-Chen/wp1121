@@ -17,11 +17,13 @@ export default function TweetInput() {
     const content = textareaRef.current?.value;
     if (!content) return;
     if (!handle) return;
+    const startTime = "time";
 
     try {
       await postTweet({
         handle,
         content,
+        startTime
       });
       textareaRef.current.value = "";
       // this triggers the onInput event on the growing textarea
