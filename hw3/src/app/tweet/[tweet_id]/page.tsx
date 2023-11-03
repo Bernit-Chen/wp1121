@@ -25,19 +25,21 @@ type TweetPageProps = {
     // this came from the query string: ?username=madmaxieee
     username?: string;
     handle?: string;
+    search?: string;
   };
 };
 
 // these two fields are always available in the props object of a page component
 export default async function TweetPage({
   params: { tweet_id },
-  searchParams: { username, handle },
+  searchParams: { username, handle, search },
 }: TweetPageProps) {
   // this function redirects to the home page when there is an error
   const errorRedirect = () => {
     const params = new URLSearchParams();
     username && params.set("username", username);
     handle && params.set("handle", handle);
+    search && params.set("search", search);
     redirect(`/?${params.toString()}`);
   };
 
@@ -181,7 +183,7 @@ export default async function TweetPage({
     <>
       <div className="flex h-screen w-full max-w-2xl flex-col overflow-scroll pt-2">
         <div className="mb-2 flex items-center gap-8 px-4">
-          <Link href={{ pathname: "/", query: { username, handle } }}>
+          <Link href={{ pathname: "/", query: { username, handle, search:"" } }}>
             <ArrowLeft size={18} />
           </Link>
           <h1 className="text-xl font-bold">View</h1>

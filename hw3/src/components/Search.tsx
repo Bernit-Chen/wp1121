@@ -9,7 +9,7 @@ export default function Search() {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
-
+  
   const handleSearch = (e:React.ChangeEvent<HTMLInputElement>) => {
     const params = new URLSearchParams(searchParams);
     const username = searchParams.get("username");
