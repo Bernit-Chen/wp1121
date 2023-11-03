@@ -1,8 +1,5 @@
 "use client";
 
-import { useRouter } from "next/navigation";
-
-
 import UserAvatar from "@/components/UserAvatar";
 import useUserInfo from "@/hooks/useUserInfo";
 

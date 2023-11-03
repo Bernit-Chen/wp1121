@@ -148,6 +148,7 @@ export default async function Home({
         </div>
         <div className="w-full px-4 pt-3">
           <TweetInput />
+          <br/>
           <Search />
         </div>
         <br/>
