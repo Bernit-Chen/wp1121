@@ -13,12 +13,17 @@ export default function TweetInput() {
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const starttimeRef = useRef<HTMLInputElement>(null);
   const endtimeRef = useRef<HTMLInputElement>(null);
+  const starthrRef = useRef<HTMLSelectElement>(null);
+  const endhrRef = useRef<HTMLSelectElement>(null);
   const { postTweet, loading } = useTweet();
 
   const handleTweet = async () => {
     const content = textareaRef.current?.value;
     const startTime = starttimeRef.current?.value;
     const endTime = endtimeRef.current?.value;
+    const startHr = starthrRef.current?.value;
+    const endHr = endhrRef.current?.value;
+
     if (!content || !startTime ||!endTime) {
       alert(" Error posting \n Please Enter All Information")
       return
@@ -51,7 +56,7 @@ export default function TweetInput() {
   };
 
   return (
-    <div className="flex gap-4" onClick={() => textareaRef.current?.focus()}>
+    <div className="flex gap-4">
       <div className="flex w-full flex-col px-2">
         <div className="mb-2 mt-6">
           <GrowingTextarea
@@ -65,10 +70,20 @@ export default function TweetInput() {
           <div className="flex flex-col mb-2 mt-6">
             <p>Start time</p>
             <input type="date" ref={starttimeRef}></input>
+            <select ref={starthrRef}>
+              {[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24].map((i) => (
+                <option value={i}>{i}時</option>
+              ))}
+            </select>
           </div>
           <div className="flex flex-col mb-2 mt-6">
             <p>End time</p>
             <input type="date" ref={endtimeRef}></input>
+            <select ref={endhrRef}>
+              {[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24].map((i) => (
+                <option value={i}>{i}時</option>
+              ))}
+            </select>
           </div>
 
         </div>
