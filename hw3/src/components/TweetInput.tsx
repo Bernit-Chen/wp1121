@@ -23,15 +23,22 @@ export default function TweetInput() {
     const endTime = endtimeRef.current?.value;
     const startHr = starthrRef.current?.value;
     const endHr = endhrRef.current?.value;
+   
 
-    if (!content || !startTime ||!endTime) {
+    if (!content || !startTime ||!endTime || !startHr || !endHr) {
       alert(" Error posting \n Please Enter All Information")
       return
     };
-    if (!endTime || !startTime) {
+    
+    if( ((((new Date(endTime)).getTime()-(new Date(startTime)).getTime())/86400000)>7) || ((((new Date(endTime)).getTime()-(new Date(startTime)).getTime())/86400000)===7 && (+endHr)>(+startHr)) ) {
       alert(" Error posting \n Please Enter Valid Time")
       return
     };
+    if( ((new Date(endTime)).getTime()<(new Date(startTime)).getTime()) || (((new Date(endTime)).getTime()===(new Date(startTime)).getTime()) && (+endHr)<(+startHr)) ) {
+      alert(" Error posting \n Please Enter Valid Time")
+      return
+    };
+
     if (!handle) return;
 
     try {
