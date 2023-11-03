@@ -15,7 +15,7 @@ const postTweetRequestSchema = z.object({
   content: z.string().min(1).max(280),
   replyToTweetId: z.number().optional(),
   startTime: z.string().optional(),
-
+  endTime: z.string().optional(),
 });
 
 // you can use z.infer to get the typescript type from a zod schema
@@ -42,7 +42,7 @@ export async function POST(request: NextRequest) {
   // the `as` keyword is a type assertion, this tells typescript
   // that we know what we're doing and that the data is of type LikeTweetRequest.
   // This is safe now because we've already validated the data with zod.
-  const { handle, content, replyToTweetId , startTime} = data as PostTweetRequest;
+  const { handle, content, replyToTweetId , startTime , endTime} = data as PostTweetRequest;
 
   try {
     // This piece of code runs the following SQL query:
@@ -61,7 +61,8 @@ export async function POST(request: NextRequest) {
         userHandle: handle,
         content,
         replyToTweetId,
-        startTime
+        startTime,
+        endTime,
       })
       .execute();
   } catch (error) {

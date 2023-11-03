@@ -71,7 +71,8 @@ export default async function TweetPage({
       content: tweetsTable.content,
       userHandle: tweetsTable.userHandle,
       createdAt: tweetsTable.createdAt,
-      startTime:  tweetsTable.startTime
+      startTime:  tweetsTable.startTime,
+      endTime: tweetsTable.endTime
     })
     .from(tweetsTable)
     .where(eq(tweetsTable.id, tweet_id_num))
@@ -135,6 +136,7 @@ export default async function TweetPage({
     likes: numLikes,
     createdAt: tweetData.createdAt,
     startTime: tweetData.startTime,
+    endTime:  tweetData.endTime,
     liked: Boolean(liked),
   };
 
@@ -213,6 +215,7 @@ export default async function TweetPage({
           <article className="mt-3 whitespace-pre-wrap text-xl">
             {tweet.content}
             {tweet.startTime}
+            {tweet.endTime}
           </article>
           <time className="my-4 block text-sm text-gray-500">
             <TimeText date={tweet.createdAt} format="h:mm A · D MMM YYYY" />

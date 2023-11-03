@@ -11,21 +11,33 @@ import { cn } from "@/lib/utils";
 export default function TweetInput() {
   const { handle } = useUserInfo();
   const textareaRef = useRef<HTMLTextAreaElement>(null);
+  const starttimeRef = useRef<HTMLInputElement>(null);
+  const endtimeRef = useRef<HTMLInputElement>(null);
   const { postTweet, loading } = useTweet();
 
   const handleTweet = async () => {
     const content = textareaRef.current?.value;
-    if (!content) return;
+    const startTime = starttimeRef.current?.value;
+    const endTime = endtimeRef.current?.value;
+    if (!content || !startTime ||!endTime) {
+      alert(" Error posting \n Please Enter All Information")
+      return
+    };
+    if (!endTime || !startTime) {
+      alert(" Error posting \n Please Enter Valid Time")
+      return
+    };
     if (!handle) return;
-    const startTime = "time";
 
     try {
       await postTweet({
         handle,
         content,
-        startTime
+        startTime,
+        endTime
       });
       textareaRef.current.value = "";
+      console.log(startTime)
       // this triggers the onInput event on the growing textarea
       // thus triggering the resize
       // for more info, see: https://developer.mozilla.org/en-US/docs/Web/API/Event
@@ -47,9 +59,19 @@ export default function TweetInput() {
             className="bg-transparent outline-none placeholder:text-gray-500"
             placeholder="Title"
           />
-          
         </div>
         <Separator />
+        <div className="flex justify-between gap-8">
+          <div className="flex flex-col mb-2 mt-6">
+            <p>Start time</p>
+            <input type="date" ref={starttimeRef}></input>
+          </div>
+          <div className="flex flex-col mb-2 mt-6">
+            <p>End time</p>
+            <input type="date" ref={endtimeRef}></input>
+          </div>
+
+        </div>
         <div className="flex justify-end">
           <button
             className={cn(
