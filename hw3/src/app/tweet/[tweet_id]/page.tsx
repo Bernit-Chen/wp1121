@@ -214,8 +214,11 @@ export default async function TweetPage({
           </div>
           <article className="mt-3 whitespace-pre-wrap text-xl">
             {tweet.content}
-            {tweet.startTime}
-            {tweet.endTime}
+            <br/>
+          </article>
+          <article className="mt-3 whitespace-pre-wrap text-l">
+            From {tweet.startTime}  to {tweet.endTime}
+            <br/>
           </article>
           <time className="my-4 block text-sm text-gray-500">
             <TimeText date={tweet.createdAt} format="h:mm A · D MMM YYYY" />

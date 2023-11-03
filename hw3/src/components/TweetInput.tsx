@@ -29,27 +29,30 @@ export default function AddButton() {
 
   const handleTweet = async () => {
     const content = textareaRef.current?.value;
-    const startTime = starttimeRef.current?.value;
-    const endTime = endtimeRef.current?.value;
+    const startDay = starttimeRef.current?.value;
+    const endDay = endtimeRef.current?.value;
     const startHr = starthrRef.current?.value;
     const endHr = endhrRef.current?.value;
    
 
-    if (!content || !startTime ||!endTime || !startHr || !endHr) {
+    if (!content || !startDay ||!endDay || !startHr || !endHr) {
       alert(" Error posting \n Please Enter All Information")
       return
     };
     
-    if( ((((new Date(endTime)).getTime()-(new Date(startTime)).getTime())/86400000)>7) || ((((new Date(endTime)).getTime()-(new Date(startTime)).getTime())/86400000)===7 && (+endHr)>(+startHr)) ) {
+    if( ((((new Date(endDay)).getTime()-(new Date(startDay)).getTime())/86400000)>7) || ((((new Date(endDay)).getTime()-(new Date(startDay)).getTime())/86400000)===7 && (+endHr)>(+startHr)) ) {
       alert(" Error posting \n Please Enter Valid Time")
       return
     };
-    if( ((new Date(endTime)).getTime()<(new Date(startTime)).getTime()) || (((new Date(endTime)).getTime()===(new Date(startTime)).getTime()) && (+endHr)<(+startHr)) ) {
+    if( ((new Date(endDay)).getTime()<(new Date(startDay)).getTime()) || (((new Date(endDay)).getTime()===(new Date(startDay)).getTime()) && (+endHr)<(+startHr)) ) {
       alert(" Error posting \n Please Enter Valid Time")
       return
     };
 
     if (!handle) return;
+
+    const startTime = startDay+' '+startHr;
+    const endTime = endDay+' '+endHr;
 
     try {
       await postTweet({
@@ -76,7 +79,6 @@ export default function AddButton() {
 
   const handleChange = () => {
     setHandleAddOpen(true);
-    console.log(handleAddOpen)
   };
   const handleAddOpenChange = (open: boolean) => {
     if (open)  setHandleAddOpen(true)
