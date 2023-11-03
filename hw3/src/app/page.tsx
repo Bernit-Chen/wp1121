@@ -127,7 +127,7 @@ export default async function Home({
     })
     .from(tweetsTable)
     .where(isNull(tweetsTable.replyToTweetId))
-    .orderBy(desc(tweetsTable.createdAt))
+    .orderBy((tweetsTable.createdAt))
     // JOIN is by far the most powerful feature of relational databases
     // it allows us to combine data from multiple tables into a single query
     // read more about it here: https://orm.drizzle.team/docs/select#join

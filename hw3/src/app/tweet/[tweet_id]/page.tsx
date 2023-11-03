@@ -171,7 +171,7 @@ export default async function TweetPage({
     })
     .from(tweetsTable)
     .where(eq(tweetsTable.replyToTweetId, tweet_id_num))
-    .orderBy(desc(tweetsTable.createdAt))
+    .orderBy((tweetsTable.createdAt))
     .innerJoin(usersTable, eq(tweetsTable.userHandle, usersTable.handle))
     .leftJoin(likesSubquery, eq(tweetsTable.id, likesSubquery.tweetId))
     .leftJoin(likedSubquery, eq(tweetsTable.id, likedSubquery.tweetId))
@@ -229,7 +229,7 @@ export default async function TweetPage({
         {tweet.liked ? (
           <ReplyInput replyToTweetId={tweet.id} replyToHandle={tweet.handle} />
         ) : (
-          <p>Join it to reply</p>
+          <p><br/> Join it to reply <br/><br/></p>
         )}
         <Separator />
         {replies.map((reply) => (

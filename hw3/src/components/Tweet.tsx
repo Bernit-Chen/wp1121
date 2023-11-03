@@ -35,7 +35,7 @@ export default function Tweet({
   const searchParams = useSearchParams();
   return (
     <>
-      {(content.includes(searchParams.get("search")!) || (searchParams.get("search")=="null")) ? (
+      {(content.includes(searchParams.get("search")!) ||(searchParams.get("search")=="null")) ? (
         <>
           <Link
             className="w-full px-4 pt-3 transition-colors hover:bg-gray-50"
