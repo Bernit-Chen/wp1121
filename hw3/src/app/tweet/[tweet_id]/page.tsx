@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
 
-import { eq, desc, sql, and } from "drizzle-orm";
+import { eq, sql, and } from "drizzle-orm";
 import {
   ArrowLeft,
   MoreHorizontal,

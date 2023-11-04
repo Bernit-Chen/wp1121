@@ -1,12 +1,10 @@
 import { useState } from "react";
 
 import { useRouter } from "next/navigation";
-import useLike from "@/hooks/useLike";
 
 export default function useTweet() {
   const [loading, setLoading] = useState(false);
   const router = useRouter();
-  const { likeTweet } = useLike();
 
   const postTweet = async ({
     handle,

@@ -52,16 +52,7 @@ yarn drizzle-kit studio
 
 ## eslint and Linting
 
-
-### 1. backend linting
 ```bash
-cd backend
 yarn
-yarn lint
-```
-### 2. frontend linting
-```bash
-cd frontend
-yarn 
 yarn lint
 ```

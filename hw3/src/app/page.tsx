@@ -1,5 +1,5 @@
 
-import { eq, desc, isNull, sql } from "drizzle-orm";
+import { eq, isNull, sql } from "drizzle-orm";
 
 import NameDialog from "@/components/NameDialog";
 import Tweet from "@/components/Tweet";

@@ -2,7 +2,7 @@
 
 import { useSearchParams } from "next/navigation";
 import { useRef } from "react";
-import { usePathname, useRouter } from "next/navigation";
+import {  useRouter } from "next/navigation";
 
 import GrowingTextarea from "@/components/GrowingTextarea";
 import { Separator } from "@/components/ui/separator";
@@ -14,10 +14,6 @@ import useLike from "@/hooks/useLike";
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
 } from "@/components/ui/dialog";
 
 export default function AddButton() {
@@ -137,7 +133,7 @@ export default function AddButton() {
               <input type="date" ref={starttimeRef}></input>
               <select ref={starthrRef}>
                 {[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24].map((i) => (
-                  <option value={i}>{i}時</option>
+                  <option key={i} value={i}>{i}時</option>
                 ))}
               </select>
             </div>
@@ -146,7 +142,7 @@ export default function AddButton() {
               <input type="date" ref={endtimeRef}></input>
               <select ref={endhrRef}>
                 {[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24].map((i) => (
-                  <option value={i}>{i}時</option>
+                  <option key={i} value={i}>{i}時</option>
                 ))}
               </select>
             </div>
