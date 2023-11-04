@@ -48,7 +48,7 @@ export default function AddButton() {
       return
     };
     if( ((new Date(endDay)).getTime()<(new Date(startDay)).getTime()) || (((new Date(endDay)).getTime()===(new Date(startDay)).getTime()) && (+endHr)<(+startHr)) ) {
-      alert("\n Error posting \n\n Please Enter Valid Time \n\n End time should be later than start time")
+      alert("\n Error posting \n\n Please Enter Valid Time \n\n End time should be later than Start time")
       return
     };
 
