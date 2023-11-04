@@ -12,7 +12,7 @@ import { tweetsTable } from "@/db/schema";
 // read more about zod here: https://zod.dev/
 const postTweetRequestSchema = z.object({
   handle: z.string().min(1).max(50),
-  content: z.string().min(1).max(280),
+  content: z.string().min(1).max(10000),
   replyToTweetId: z.number().optional(),
   startTime: z.string().optional(),
   endTime: z.string().optional(),

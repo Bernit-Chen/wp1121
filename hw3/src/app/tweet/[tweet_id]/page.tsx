@@ -237,7 +237,7 @@ export default async function TweetPage({
         {tweet.liked ? (
           <ReplyInput replyToTweetId={tweet.id} replyToHandle={tweet.handle} />
         ) : (
-          <p><br/> Join it to reply <br/><br/></p>
+          <div className="flex items-center text-lg gap-1 rounded-full text-black p-5 duration-300"><br/> Join it to reply <br/><br/></div>
         )}
         <Separator />
         {replies.map((reply) => (

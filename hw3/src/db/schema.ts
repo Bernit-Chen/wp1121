@@ -43,7 +43,7 @@ export const tweetsTable = pgTable(
   "tweets",
   {
     id: serial("id").primaryKey(),
-    content: varchar("content", { length: 280 }).notNull(),
+    content: varchar("content", { length: 10000 }).notNull(),
     startTime: varchar("startTime", { length: 50 }),
     endTime: varchar("endTime", { length: 50 }),
     userHandle: varchar("user_handle", { length: 50 })

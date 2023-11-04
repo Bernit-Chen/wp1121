@@ -39,16 +39,16 @@ export default function AddButton() {
    
 
     if (!content || !startDay ||!endDay || !startHr || !endHr) {
-      alert(" Error posting \n Please Enter All Information")
+      alert("\n Error posting \n\n Please Enter All Information")
       return
     };
     
     if( ((((new Date(endDay)).getTime()-(new Date(startDay)).getTime())/86400000)>7) || ((((new Date(endDay)).getTime()-(new Date(startDay)).getTime())/86400000)===7 && (+endHr)>(+startHr)) ) {
-      alert(" Error posting \n Please Enter Valid Time")
+      alert("\n Error posting \n\n Please Enter Valid Time \n\n The duration of activity should be in 7 days")
       return
     };
     if( ((new Date(endDay)).getTime()<(new Date(startDay)).getTime()) || (((new Date(endDay)).getTime()===(new Date(startDay)).getTime()) && (+endHr)<(+startHr)) ) {
-      alert(" Error posting \n Please Enter Valid Time")
+      alert("\n Error posting \n\n Please Enter Valid Time \n\n End time should be later than start time")
       return
     };
 
