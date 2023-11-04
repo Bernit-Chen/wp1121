@@ -60,7 +60,7 @@ export default function Tweet({
                   </time>
                 </p>
                 {/* `white-space: pre-wrap` tells html to render \n and \t chracters  */}
-                <article className="mt-2 whitespace-pre-wrap">{content}</article>
+                <article className="mt-2 whitespace-pre-wrap break-all">{content}</article>
                 <div className="my-2 flex items-center justify-between gap-12 text-blue-400">
                   <div>{liked ? <Check size={30} />:<X size={30} />}</div>
                   <div>{likes>0 ? likes : 0}人參加</div>

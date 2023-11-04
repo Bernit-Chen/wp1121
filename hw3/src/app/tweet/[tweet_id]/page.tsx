@@ -212,7 +212,7 @@ export default async function TweetPage({
               <MoreHorizontal size={16} />
             </button>
           </div>
-          <article className="mt-3 whitespace-pre-wrap text-xl">
+          <article className="mt-3 whitespace-pre-wrap break-all text-xl">
             {tweet.content}
             <br/>
           </article>

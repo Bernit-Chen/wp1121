@@ -123,10 +123,10 @@ export default function AddButton() {
 
       <DialogContent className="flex gap-4">
         <div className="flex w-full flex-col px-2">
-          <div className="mb-2 mt-6">
+          <div className="break-all mb-2 mt-6">
             <GrowingTextarea
               ref={textareaRef}
-              className="bg-transparent outline-none placeholder:text-gray-500"
+              className="bg-transparent outline-none break-all placeholder:text-gray-500"
               placeholder="Title"
             />
           </div>

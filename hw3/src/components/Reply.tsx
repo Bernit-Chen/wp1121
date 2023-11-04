@@ -41,7 +41,7 @@ export default function Reply({
               </time>
             </p>
             {/* `white-space: pre-wrap` tells html to render \n and \t chracters  */}
-            <article className="mt-2  whitespace-pre-wrap">{content}</article>
+            <article className="mt-2  whitespace-pre-wrap break-all">{content}</article>
           </article>
         </div>
       <Separator />
