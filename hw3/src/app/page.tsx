@@ -146,10 +146,10 @@ export default async function Home({
           <ProfileButton />
           <SwitchUser />
         </div>
-        <div className="w-full px-4 pt-3">
+        <div className="flex justify-between w-full px-4 pt-3">
+          <Search />
           <TweetInput />
           <br/>
-          <Search />
         </div>
         <br/>
         <Separator />

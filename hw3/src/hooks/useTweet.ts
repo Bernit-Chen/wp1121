@@ -1,10 +1,12 @@
 import { useState } from "react";
 
 import { useRouter } from "next/navigation";
+import useLike from "@/hooks/useLike";
 
 export default function useTweet() {
   const [loading, setLoading] = useState(false);
   const router = useRouter();
+  const { likeTweet } = useLike();
 
   const postTweet = async ({
     handle,
@@ -37,11 +39,14 @@ export default function useTweet() {
       throw new Error(body.error);
     }
 
+    const tweetID = (await res.json()).message;
+
     // router.refresh() is a Next.js function that refreshes the page without
     // reloading the page. This is useful for when we want to update the UI
     // from server components.
     router.refresh();
     setLoading(false);
+    return tweetID;
   };
 
   return {

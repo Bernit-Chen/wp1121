@@ -1,6 +1,8 @@
 "use client";
 
+import { useSearchParams } from "next/navigation";
 import { useRef } from "react";
+import { usePathname, useRouter } from "next/navigation";
 
 import GrowingTextarea from "@/components/GrowingTextarea";
 import { Separator } from "@/components/ui/separator";
@@ -8,6 +10,7 @@ import useTweet from "@/hooks/useTweet";
 import useUserInfo from "@/hooks/useUserInfo";
 import { cn } from "@/lib/utils";
 import { useState } from "react";
+import useLike from "@/hooks/useLike";
 import {
   Dialog,
   DialogContent,
@@ -26,6 +29,10 @@ export default function AddButton() {
   const starthrRef = useRef<HTMLSelectElement>(null);
   const endhrRef = useRef<HTMLSelectElement>(null);
   const { postTweet, loading } = useTweet();
+  const { likeTweet } = useLike();
+  const router = useRouter();
+  const searchParams = useSearchParams();
+
 
   const handleTweet = async () => {
     const content = textareaRef.current?.value;
@@ -55,13 +62,25 @@ export default function AddButton() {
     const endTime = endDay+' '+endHr;
 
     try {
-      await postTweet({
+      const postID = await postTweet({
         handle,
         content,
         startTime,
         endTime
       });
       textareaRef.current.value = "";
+      starttimeRef.current.value = "";
+      endtimeRef.current.value = "";
+      starthrRef.current.value = "";
+      endhrRef.current.value = "";
+
+      await likeTweet({
+        tweetId: postID,
+        userHandle: handle,
+      });
+      const params = new URLSearchParams(searchParams);
+      router.push(`/tweet/${postID}?${params.toString()}`);
+
       // this triggers the onInput event on the growing textarea
       // thus triggering the resize
       // for more info, see: https://developer.mozilla.org/en-US/docs/Web/API/Event
@@ -91,8 +110,8 @@ export default function AddButton() {
       className="flex items-center gap-2 rounded-full p-3 text-start transition-colors duration-300 bg-blue-200 hover:bg-gray-200"
       onClick={handleChange}
     >
-      <div className="w-20 max-lg:hidden">
-        <p className="text-sm font-bold">ADD TWEET</p>
+      <div className="w-15 max-lg:hidden">
+        <p className="text-sm font-bold">ADD</p>
       </div>
     </button>
 

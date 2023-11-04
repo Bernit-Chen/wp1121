@@ -55,7 +55,7 @@ export async function POST(request: NextRequest) {
     //  {content},
     //  {replyToTweetId}
     // )
-    await db
+    const[tweet]=await db
       .insert(tweetsTable)
       .values({
         userHandle: handle,
@@ -64,7 +64,9 @@ export async function POST(request: NextRequest) {
         startTime,
         endTime,
       })
+      .returning()
       .execute();
+      return NextResponse.json({message: tweet.id},{status: 200});
   } catch (error) {
     // The NextResponse object is a easy to use API to handle responses.
     // IMHO, it's more concise than the express API.
