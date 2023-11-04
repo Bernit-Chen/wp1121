@@ -2,11 +2,8 @@
 
 import { useRef } from "react";
 
-import GrowingTextarea from "@/components/GrowingTextarea";
-import UserAvatar from "@/components/UserAvatar";
 import useTweet from "@/hooks/useTweet";
 import useUserInfo from "@/hooks/useUserInfo";
-import { cn } from "@/lib/utils";
 
 type ReplyInputProps = {
   replyToTweetId: number;
@@ -19,9 +16,10 @@ export default function ReplyInput({
 }: ReplyInputProps) {
   const { handle } = useUserInfo();
   const textareaRef = useRef<HTMLTextAreaElement>(null);
-  const { postTweet, loading } = useTweet();
+  const { postTweet } = useTweet();
 
-  const handleReply = async () => {
+  const handleReply = async (e:React.KeyboardEvent<HTMLTextAreaElement>) => {
+    if(e.keyCode !==13) return;
     const content = textareaRef.current?.value;
     if (!content) return;
     if (!handle) return;
@@ -49,21 +47,24 @@ export default function ReplyInput({
     // this allows us to focus (put the cursor in) the textarea when the user
     // clicks anywhere on the div
     <div onClick={() => textareaRef.current?.focus()}>
+    <div>
+        {/* <UserAvatar className="col-start-1 row-start-2 h-12 w-12" /> */}
       <div className="grid grid-cols-[fit-content(48px)_1fr] gap-4 px-4 pt-4">
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <UserAvatar className="col-start-1 row-start-2 h-12 w-12" />
         <p className="col-start-2 row-start-1 text-gray-500">
           Replying to <span className="text-brand">@{replyToHandle}</span>
         </p>
-        <GrowingTextarea
-          ref={textareaRef}
-          wrapperClassName="col-start-2 row-start-2"
-          className="bg-transparent text-xl outline-none placeholder:text-gray-500 overflow-scroll"
-          placeholder="Enter your reply"
-        />
+        <br/>
+        <br/>
       </div>
+        <textarea
+          ref={textareaRef}
+          className="p-8 col-start-2 row-start-2 w-full bg-transparent text-xl outline-none placeholder:text-gray-500 overflow-scroll"
+          placeholder="Enter your reply"
+          onKeyDown={(e)=> handleReply(e)}
+        />
       <div className="p-4 text-end">
-        <button
+        {/* <button
           className={cn(
             "my-2 rounded-full bg-brand px-4 py-2 text-white transition-colors hover:bg-brand/70",
             "disabled:cursor-not-allowed disabled:bg-brand/40 disabled:hover:bg-brand/40",
@@ -72,8 +73,9 @@ export default function ReplyInput({
           disabled={loading}
         >
           Reply
-        </button>
+        </button> */}
       </div>
+    </div>
     </div>
   );
 }
