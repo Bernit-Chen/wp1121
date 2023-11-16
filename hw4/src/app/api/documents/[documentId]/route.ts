@@ -41,6 +41,7 @@ export async function GET(
             displayId: true,
             title: true,
             content: true,
+            mesData: true,
           },
         },
       },
@@ -55,6 +56,7 @@ export async function GET(
         id: document.displayId,
         title: document.title,
         content: document.content,
+        mesData: document.mesData
       },
       { status: 200 },
     );
@@ -131,6 +133,7 @@ export async function PUT(
         id: updatedDoc.displayId,
         title: updatedDoc.title,
         content: updatedDoc.content,
+        mesData: updatedDoc.mesData
       },
     });
 
@@ -139,6 +142,7 @@ export async function PUT(
         id: updatedDoc.displayId,
         title: updatedDoc.title,
         content: updatedDoc.content,
+        mesData: updatedDoc.mesData
       },
       { status: 200 },
     );

@@ -7,6 +7,7 @@ import {
   uuid,
   varchar,
   unique,
+  json
 } from "drizzle-orm/pg-core";
 
 // Checkout the many-to-many relationship in the following tutorial:
@@ -40,10 +41,11 @@ export const usersRelations = relations(usersTable, ({ many }) => ({
 export const documentsTable = pgTable(
   "documents",
   {
-    id: serial("id").primaryKey(),
-    displayId: uuid("display_id").defaultRandom().notNull().unique(),
+    id: serial("id").primaryKey(), //1,2,3,4
+    displayId: uuid("display_id").defaultRandom().notNull().unique(), 
     title: varchar("title", { length: 100 }).notNull(),
     content: text("content").notNull(),
+    mesData: json("mesData"),
   },
   (table) => ({
     displayIdIndex: index("display_id_index").on(table.displayId),

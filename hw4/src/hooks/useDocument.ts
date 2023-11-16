@@ -48,6 +48,7 @@ export const useDocument = () => {
         body: JSON.stringify({
           title: debouncedDocument.title,
           content: debouncedDocument.content,
+          mesData: debouncedDocument.mesData
         }),
       });
       if (!res.ok) {
@@ -115,11 +116,20 @@ export const useDocument = () => {
   };
 
   const content = document?.content || "";
+  const mesData = document?.mesData;
   const setContent = (newContent: string) => {
     if (document === null) return;
+    const newMesData ={
+      message: [...document.mesData.message, newContent], //append
+      userID: [...document.mesData.userID, userId ?? ""],
+      block: [...document.mesData.block, true],
+      creatTime: [...document.mesData.creatTime, Date.now()],
+      announceOfTime: document.mesData.announceOfTime
+    };
     setDocument({
       ...document,
       content: newContent,
+      mesData: newMesData
     });
   };
 
@@ -129,6 +139,7 @@ export const useDocument = () => {
     title,
     setTitle,
     content,
+    mesData,
     setContent,
   };
 };
