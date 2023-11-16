@@ -3,6 +3,9 @@
 import { Input } from "@/components/ui/input";
 import { useDocument } from "@/hooks/useDocument";
 import React, {useRef} from "react";
+import { cn } from "@/lib/utils/shadcn";
+import { useSession } from "next-auth/react";
+
 
 function DocPage() {
   const { title, setTitle, content, mesData, setContent } = useDocument();
@@ -23,13 +26,13 @@ function DocPage() {
       alert("Error sending message")
     }
   }
-
-  const mapMessage = mesData?.message.map((x)=>x+" ");
   
+  const { data: session } = useSession();
+  const userId = session?.user?.id;
 
   return (
     <div className="w-full">
-      <nav className="sticky top-0 flex w-full justify-between p-2 shadow-sm">
+      {/* <nav className="sticky top-0 flex w-full justify-between p-2 shadow-sm">
         <input
           value={title}
           onChange={(e) => {
@@ -38,13 +41,23 @@ function DocPage() {
           placeholder="Document Title"
           className="rounded-lg px-2 py-1 text-slate-700 outline-0 focus:bg-slate-100"
         />
-      </nav>
+      </nav> */}
       
       <section className="w-full px-4 py-4">
-        <div className="h-[80vh] w-full outline-0 ">{mesData ? mesData.message:"null"}</div>
-        <p>測試</p>
-        <div className="w-full outline-0 ">
-          
+        <div className="h-[80vh] w-full outline-0">
+          {Array.from({length: mesData?.message.length ?? 0},(_, index)=>index).map((i)=>(
+            <div
+              className={cn(
+                "flex items-center gap-1 rounded-full p-5 transition-colors bg-green-100",
+                (mesData?.userID[i]===userId)&&("bg-blue-500"),
+              )}
+              onContextMenu={(e:React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+                e.preventDefault(); 
+                alert("按右鍵");}}
+            >
+              {mesData?.message[i]}
+            </div>
+          ))}
         </div>
       </section>
 
