@@ -1,6 +1,13 @@
 import { BiError } from "react-icons/bi";
 
-function DocsPage() {
+function DocsPage({
+  params,
+  searchParams,
+}: {
+  params: { slug: string }
+  searchParams: { [key: string]: string | string[] | undefined }
+}) {
+  console.log(searchParams);
   return (
     <div className="flex h-[90vh] w-full items-center justify-center">
       <div className="flex flex-col items-center justify-center">

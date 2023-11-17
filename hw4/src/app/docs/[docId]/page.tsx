@@ -119,16 +119,22 @@ function DocPage() {
 
   return (
     <div className="w-full">
-      {/* <nav className="sticky top-0 flex w-full justify-between p-2 shadow-sm">
-        <input
+      <nav className="sticky top-0 flex w-full justify-between p-2 shadow-sm">
+        {/* <input
           value={title}
           onChange={(e) => {
             setTitle(e.target.value);
           }}
           placeholder="Document Title"
           className="rounded-lg px-2 py-1 text-slate-700 outline-0 focus:bg-slate-100"
-        />
-      </nav> */}
+        /> */}
+        <div 
+          style={{display: (document?.mesData.announceOfTime!==0) ? "block" : "none"}}
+          className="rounded-lg px-2 py-1 text-slate-700 outline-0 focus:bg-slate-100"
+        >
+          {document?.mesData.message[document.mesData.creatTime.indexOf(document.mesData.announceOfTime)]}
+        </div>
+      </nav>
       
       <section className="w-full px-4 py-4">
         <div className="h-[80vh] w-[20vh] outline-0">
