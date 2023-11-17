@@ -40,6 +40,27 @@ function DocPage() {
     }
   }
 
+  const pinAnnounce = ()=>{
+    if(!mesData) return;
+    if (document === null) return;
+    const newMesData ={
+      message: [...document.mesData.message],
+      userID: [...document.mesData.userID],
+      block: [...document.mesData.block],
+      creatTime: [...document.mesData.creatTime],
+      announceOfTime: document.mesData.creatTime[mesIndex],
+    };
+    try{
+      setDocument({
+        ...document,
+        mesData: newMesData
+      });
+      setOpen(false);
+    } catch (e) {
+      alert("Error Pin message")
+    }
+  }
+
   const deleteYourself = ()=>{
     if(!mesData) return;
     if (document === null) return;
@@ -151,7 +172,7 @@ function DocPage() {
         <DialogContent className="sm:max-w-[325px]">
           <div className="grid gap-4 py-4">
             <div className="grid grid-cols-4 items-center gap-4">
-              <Button>Set Announcement</Button>
+              <Button onClick={pinAnnounce}>Set Announcement</Button>
             </div>
             <div 
               style={{display: (mesData?.userID[mesIndex]===userId) ? "block" : "none"}}
