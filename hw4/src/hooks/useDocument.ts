@@ -3,8 +3,6 @@ import { useEffect, useMemo, useState } from "react";
 import { useSession } from "next-auth/react";
 import { useParams, useRouter } from "next/navigation";
 
-import { useDebounce } from "use-debounce";
-
 import { pusherClient } from "@/lib/pusher/client";
 import type { Document, User } from "@/lib/types/db";
 
@@ -19,7 +17,6 @@ export const useDocument = () => {
 
   const [document, setDocument] = useState<Document | null>(null);
   const [dbDocument, setDbDocument] = useState<Document | null>(null);
-  const [debouncedDocument] = useDebounce(document, 300);
   const router = useRouter();
 
   const { data: session } = useSession();
@@ -35,20 +32,19 @@ export const useDocument = () => {
 
   // When the debounced document changes, update the document
   useEffect(() => {
-    if (debouncedDocument === null) return;
     if (isSynced) return;
 
     const updateDocument = async () => {
-      if (!debouncedDocument) return;
+      if (!document) return;
       const res = await fetch(`/api/documents/${documentId}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          title: debouncedDocument.title,
-          content: debouncedDocument.content,
-          mesData: debouncedDocument.mesData
+          title: document.title,
+          content: document.content,
+          mesData: document.mesData
         }),
       });
       if (!res.ok) {
@@ -62,7 +58,7 @@ export const useDocument = () => {
       setDbDocument(data);
     };
     updateDocument();
-  }, [debouncedDocument, documentId, router, dbDocument, isSynced]);
+  }, [document, documentId, router, dbDocument, isSynced]);
 
   // Subscribe to pusher events
   useEffect(() => {

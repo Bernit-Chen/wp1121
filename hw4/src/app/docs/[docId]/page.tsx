@@ -22,6 +22,7 @@ function DocPage() {
   const inputRef = useRef<HTMLInputElement>(null);
   const [open,setOpen] = useState(false);
   const [mesIndex,setMesIndex] = useState(0);
+  
 
   const handleReply = async (e:React.KeyboardEvent<HTMLInputElement>)=>{
     const message = inputRef.current?.value;
@@ -65,15 +66,20 @@ function DocPage() {
   const deleteEveryone = ()=>{
     if(!mesData) return;
     if (document === null) return;
-    const newBlock = mesData.block;
-    newBlock[mesIndex] = false;
+  
+    document.mesData.message.splice(mesIndex,1)
+    document.mesData.userID.splice(mesIndex,1)
+    document.mesData.block.splice(mesIndex,1)
+    document.mesData.creatTime.splice(mesIndex,1)
+    console.log(document.mesData)
     const newMesData ={
-      message: [...document.mesData.message],
-      userID: [...document.mesData.userID],
-      block: newBlock,
-      creatTime: [...document.mesData.creatTime],
-      announceOfTime: document.mesData.announceOfTime
+      message: document.mesData.message,
+      userID: document.mesData.userID,
+      block: document.mesData.block,
+      creatTime: document.mesData.creatTime,
+      announceOfTime: (document.mesData.announceOfTime===document.mesData.creatTime[mesIndex]) ? 0:document.mesData.announceOfTime
     };
+    console.log(newMesData)
     try{
       setDocument({
         ...document,
