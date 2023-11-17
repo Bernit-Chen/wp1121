@@ -134,6 +134,7 @@ export const useDocument = () => {
   };
 
   return {
+    setDocument,
     documentId,
     document,
     title,

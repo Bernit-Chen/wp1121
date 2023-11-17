@@ -2,14 +2,26 @@
 
 import { Input } from "@/components/ui/input";
 import { useDocument } from "@/hooks/useDocument";
-import React, {useRef} from "react";
+import React, {useRef, useState} from "react";
 import { cn } from "@/lib/utils/shadcn";
 import { useSession } from "next-auth/react";
+import { Button } from "@/components/ui/button";
+import type { Document } from "@/lib/types/db";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 
 
 function DocPage() {
-  const { title, setTitle, content, mesData, setContent } = useDocument();
+  const { title, setTitle, content, mesData, setContent, document, setDocument } = useDocument();
   const inputRef = useRef<HTMLInputElement>(null);
+  const [open,setOpen] = useState(false);
+  const [mesIndex,setMesIndex] = useState(0);
 
   const handleReply = async (e:React.KeyboardEvent<HTMLInputElement>)=>{
     const message = inputRef.current?.value;
@@ -26,6 +38,54 @@ function DocPage() {
       alert("Error sending message")
     }
   }
+
+  const deleteYourself = ()=>{
+    if(!mesData) return;
+    if (document === null) return;
+    const newBlock = mesData.block;
+    newBlock[mesIndex] = false;
+    const newMesData ={
+      message: [...document.mesData.message],
+      userID: [...document.mesData.userID],
+      block: newBlock,
+      creatTime: [...document.mesData.creatTime],
+      announceOfTime: document.mesData.announceOfTime
+    };
+    try{
+      setDocument({
+        ...document,
+        mesData: newMesData
+      });
+      setOpen(false);
+    } catch (e) {
+      alert("Error delete message")
+    }
+  }
+
+  const deleteEveryone = ()=>{
+    if(!mesData) return;
+    if (document === null) return;
+    const newBlock = mesData.block;
+    newBlock[mesIndex] = false;
+    const newMesData ={
+      message: [...document.mesData.message],
+      userID: [...document.mesData.userID],
+      block: newBlock,
+      creatTime: [...document.mesData.creatTime],
+      announceOfTime: document.mesData.announceOfTime
+    };
+    try{
+      setDocument({
+        ...document,
+        mesData: newMesData
+      });
+      setOpen(false);
+    } catch (e) {
+      alert("Error delete message")
+    }
+  }
+
+
   
   const { data: session } = useSession();
   const userId = session?.user?.id;
@@ -44,16 +104,19 @@ function DocPage() {
       </nav> */}
       
       <section className="w-full px-4 py-4">
-        <div className="h-[80vh] w-full outline-0">
+        <div className="h-[80vh] w-[20vh] outline-0">
           {Array.from({length: mesData?.message.length ?? 0},(_, index)=>index).map((i)=>(
             <div
+              style={{display: (mesData?.block[i] || userId !== mesData?.userID[i]) ? "block" : "none"}}
               className={cn(
                 "flex items-center gap-1 rounded-full p-5 transition-colors bg-green-100",
                 (mesData?.userID[i]===userId)&&("bg-blue-500"),
               )}
               onContextMenu={(e:React.MouseEvent<HTMLDivElement, MouseEvent>) => {
                 e.preventDefault(); 
-                alert("按右鍵");}}
+                setMesIndex(i);
+                setOpen(true);
+              }}
             >
               {mesData?.message[i]}
             </div>
@@ -77,6 +140,28 @@ function DocPage() {
         onKeyDown={e => handleReply(e)}
         className="sticky bottom-0 w-full"
       />
+
+      <Dialog open={open} onOpenChange={()=>{if(open) setOpen(false);}}>
+        <DialogContent className="sm:max-w-[325px]">
+          <div className="grid gap-4 py-4">
+            <div className="grid grid-cols-4 items-center gap-4">
+              <Button>Set Announcement</Button>
+            </div>
+            <div 
+              style={{display: (mesData?.userID[mesIndex]===userId) ? "block" : "none"}}
+              className="grid grid-cols-4 items-center gap-4"
+            >
+              <Button onClick={deleteYourself}>Delete for Yourself</Button>
+            </div>
+            <div 
+              style={{display: (mesData?.userID[mesIndex]===userId) ? "block" : "none"}}
+              className="grid grid-cols-4 items-center gap-4"
+            >
+              <Button onClick={deleteEveryone}>Delete for Everyone</Button>
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
