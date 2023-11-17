@@ -55,6 +55,9 @@ async function Navbar() {
             <AiFillFileAdd size={16} />
             <p>Create Document</p>
           </button>
+          <div>
+            
+          </div>
         </form>
       </nav>
       <section className="flex w-full flex-col pt-3">
