@@ -53,6 +53,9 @@ export const useDocument = () => {
       }
       const data: Document = await res.json();
       // Update the navbar if the title changed
+      if (dbDocument?.mesData !== data.mesData) {
+        router.refresh();
+      }
       if (dbDocument?.title !== data.title) {
         router.refresh();
       }

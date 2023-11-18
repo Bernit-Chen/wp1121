@@ -2,7 +2,7 @@
 
 import { Input } from "@/components/ui/input";
 import { useDocument } from "@/hooks/useDocument";
-import React, {useRef, useState} from "react";
+import React, {useRef, useState, useEffect } from "react";
 import { cn } from "@/lib/utils/shadcn";
 import { useSession } from "next-auth/react";
 import { Button } from "@/components/ui/button";
@@ -110,6 +110,15 @@ function DocOfPage() {
   const { data: session } = useSession();
   const userId = session?.user?.id;
 
+  const messagesEndRef = useRef<null | HTMLDivElement>(null);
+  const scrollToBottom = () => {
+    if (!messagesEndRef.current) return;
+    messagesEndRef.current.scrollIntoView({ behavior: "smooth" })
+  }
+  useEffect(() => {
+    scrollToBottom()
+  }, [JSON.parse(document?.mesData ?? '{"message":""}').message]);
+
   return (
         <div className="w-full">
           <nav className="sticky top-0 flex w-full justify-between p-2 shadow-sm">
@@ -147,6 +156,7 @@ function DocOfPage() {
                   {mesDataObj?.message[i]}
                 </div>
               ))}
+              <div ref={messagesEndRef} />
             </div>
           </section>
 
