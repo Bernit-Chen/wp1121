@@ -85,7 +85,7 @@ async function Navbar({ searchContent }: Props) {
                     {doc.document.title}
                   </div>
                   <div className="text-sm font-light ">
-                    {JSON.parse(doc.document.mesData).message[0]}
+                    {JSON.parse(doc.document.mesData).message[JSON.parse(doc.document.mesData).message.length-1]}
                   </div>
                 </div>
               </Link>

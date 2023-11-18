@@ -2,10 +2,12 @@ import { eq } from "drizzle-orm";
 
 import { db } from "@/db";
 import { documentsTable, usersToDocumentsTable } from "@/db/schema";
+import { revalidatePath } from "next/cache";
+import { publicEnv } from "@/lib/env/public";
 
 export const createDocument = async (userId: string) => {
   "use server";
-  console.log("[createDocument]");
+  
 
   const newDocId = await db.transaction(async (tx) => {
     const [newDoc] = await tx
@@ -41,9 +43,10 @@ export const getDocuments = async (userId: string) => {
     },
   });
   const newD = documents;
-  // newD.sort(function(a,b){
-  //   return (a-b); // sort by latestmessage的createdAt
-  // })
+  newD.sort(function(a,b){
+    return (JSON.parse(b.document.mesData).creatTime[JSON.parse(b.document.mesData).creatTime.length-1] - JSON.parse(a.document.mesData).creatTime[JSON.parse(a.document.mesData).creatTime.length-1]); // sort by latestmessage的createdAt
+  })
+  // revalidatePath(`${publicEnv.NEXT_PUBLIC_BASE_URL}/docs/${docId}`);
   return newD;
 };
 
