@@ -2,17 +2,15 @@ import { BiError } from "react-icons/bi";
 import Navbar from "./_components/Navbar";
 
 function DocsPage({
-  params,
   searchParams,
 }: {
-  params: { slug: string }
-  searchParams: { [key: string]: string | string[] | undefined }
+  searchParams: { [key: string]: string }
 }) {
-  console.log(searchParams);
+  
   return (
     <div className="flex-rows fixed top-0 flex h-screen w-full overflow-hidden">
       <nav className="flex w-2/5 flex-col overflow-y-scroll border-r bg-slate-100 pb-10">
-        <Navbar />
+        <Navbar searchContent={searchParams.search ? searchParams.search :""} />
       </nav>
       <div className="w-full overflow-y-scroll">
         <div className="flex h-[90vh] w-full items-center justify-center">

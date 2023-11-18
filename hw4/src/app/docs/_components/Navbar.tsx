@@ -8,14 +8,20 @@ import { redirect } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { auth } from "@/lib/auth";
 import { publicEnv } from "@/lib/env/public";
+import SearchBar from "./SearchBar";
 
 import { createDocument, deleteDocument, getDocuments } from "./actions";
 
-async function Navbar() {
+type Props = {
+  searchContent: string;
+};
+
+async function Navbar({ searchContent }: Props) {
   const session = await auth();
   if (!session || !session?.user?.id) {
     redirect(publicEnv.NEXT_PUBLIC_BASE_URL);
   }
+  console.log(searchContent)
   const userId = session.user.id;
   const documents = await getDocuments(userId);
   return (
@@ -55,15 +61,16 @@ async function Navbar() {
             <AiFillFileAdd size={16} />
             <p>Create Document</p>
           </button>
-          <div>
-            
-          </div>
         </form>
+        <div>
+          <SearchBar/>
+        </div>
       </nav>
       <section className="flex w-full flex-col pt-3">
         {documents.map((doc, i) => {
           return (
             <div
+              style={{display: doc.document.title.includes(searchContent) ? "block":"none"}}
               key={i}
               className="group flex w-full cursor-pointer items-center justify-between gap-2 text-slate-400 hover:bg-slate-200 "
             >
