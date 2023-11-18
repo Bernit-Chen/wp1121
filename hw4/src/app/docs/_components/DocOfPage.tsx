@@ -119,6 +119,17 @@ function DocOfPage() {
     scrollToBottom()
   }, [JSON.parse(document?.mesData ?? '{"message":""}').message]);
 
+  function urlify(text:string) {
+    const urlRegex = /(https?:\/\/[^\s]+)/g;
+    return text.split(urlRegex)
+       .map(part => {
+          if(part.match(urlRegex)) {
+             return <a href={part} target="_blank">{part}</a>;
+          }
+          return part;
+       });
+  }
+
   return (
         <div className="w-full">
           <nav className="sticky top-0 flex w-full justify-between p-2 shadow-sm">
@@ -153,7 +164,7 @@ function DocOfPage() {
                     setOpen(true);
                   }}
                 >
-                  {mesDataObj?.message[i]}
+                  {urlify(mesDataObj?.message[i])}
                 </div>
               ))}
               <div ref={messagesEndRef} />
@@ -174,7 +185,7 @@ function DocOfPage() {
             ref={inputRef}
             placeholder="message"
             onKeyDown={e => handleReply(e)}
-            className="sticky bottom-0 w-full"
+            className="sticky bottom-0 w-full bg-gray-100"
           />
 
           <Dialog open={open} onOpenChange={()=>{if(open) setOpen(false);}}>
