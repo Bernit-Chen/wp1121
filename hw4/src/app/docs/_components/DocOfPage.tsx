@@ -13,7 +13,7 @@ import {
 
 
 function DocOfPage() {
-  const { title, setTitle, content, mesData, setContent, document, setDocument } = useDocument();
+  const { title, setTitle, content, mesData, setContent, mesDataObj, document, setDocument } = useDocument();
   const inputRef = useRef<HTMLInputElement>(null);
   const [open,setOpen] = useState(false);
   const [mesIndex,setMesIndex] = useState(0);
@@ -39,16 +39,16 @@ function DocOfPage() {
     if(!mesData) return;
     if (document === null) return;
     const newMesData ={
-      message: [...document.mesData.message],
-      userID: [...document.mesData.userID],
-      block: [...document.mesData.block],
-      creatTime: [...document.mesData.creatTime],
-      announceOfTime: document.mesData.creatTime[mesIndex],
+      message: [...JSON.parse(document.mesData).message],
+      userID: [...JSON.parse(document.mesData).userID],
+      block: [...JSON.parse(document.mesData).block],
+      creatTime: [...JSON.parse(document.mesData).creatTime],
+      announceOfTime: JSON.parse(document.mesData).creatTime[mesIndex],
     };
     try{
       setDocument({
         ...document,
-        mesData: newMesData
+        mesData: JSON.stringify(newMesData)
       });
       setOpen(false);
     } catch (e) {
@@ -59,19 +59,19 @@ function DocOfPage() {
   const deleteYourself = ()=>{
     if(!mesData) return;
     if (document === null) return;
-    const newBlock = mesData.block;
+    const newBlock = JSON.parse(mesData).block;
     newBlock[mesIndex] = false;
     const newMesData ={
-      message: [...document.mesData.message],
-      userID: [...document.mesData.userID],
+      message: [...JSON.parse(document.mesData).message],
+      userID: [...JSON.parse(document.mesData).userID],
       block: newBlock,
-      creatTime: [...document.mesData.creatTime],
-      announceOfTime: document.mesData.announceOfTime
+      creatTime: [...JSON.parse(document.mesData).creatTime],
+      announceOfTime: JSON.parse(document.mesData).announceOfTime
     };
     try{
       setDocument({
         ...document,
-        mesData: newMesData
+        mesData:JSON.stringify(newMesData)
       });
       setOpen(false);
     } catch (e) {
@@ -83,23 +83,23 @@ function DocOfPage() {
     if(!mesData) return;
     if (document === null) return;
   
-    document.mesData.message.splice(mesIndex,1)
-    document.mesData.userID.splice(mesIndex,1)
-    document.mesData.block.splice(mesIndex,1)
-    document.mesData.creatTime.splice(mesIndex,1)
-    console.log(document.mesData)
+    mesDataObj.message.splice(mesIndex,1)
+    mesDataObj.userID.splice(mesIndex,1)
+    mesDataObj.block.splice(mesIndex,1)
+    mesDataObj.creatTime.splice(mesIndex,1)
+    console.log(mesDataObj)
     const newMesData ={
-      message: document.mesData.message,
-      userID: document.mesData.userID,
-      block: document.mesData.block,
-      creatTime: document.mesData.creatTime,
-      announceOfTime: (document.mesData.announceOfTime===document.mesData.creatTime[mesIndex]) ? 0:document.mesData.announceOfTime
+      message: mesDataObj.message,
+      userID: mesDataObj.userID,
+      block: mesDataObj.block,
+      creatTime: mesDataObj.creatTime,
+      announceOfTime: (mesDataObj.announceOfTime===mesDataObj.creatTime[mesIndex]) ? 0:mesDataObj.announceOfTime
     };
     console.log(newMesData)
     try{
       setDocument({
         ...document,
-        mesData: newMesData
+        mesData:JSON.stringify(newMesData)
       });
       setOpen(false);
     } catch (e) {
@@ -122,21 +122,21 @@ function DocOfPage() {
               className="rounded-lg px-2 py-1 text-slate-700 outline-0 focus:bg-slate-100"
             /> */}
             <div 
-              style={{display: (document?.mesData.announceOfTime!==0) ? "block" : "none"}}
+              style={{display: (mesDataObj.announceOfTime!==0) ? "block" : "none"}}
               className="rounded-lg px-2 py-1 text-slate-700 outline-0 focus:bg-slate-100"
             >
-              {document?.mesData.message[document.mesData.creatTime.indexOf(document.mesData.announceOfTime)]}
+              {document && document.mesData && mesDataObj.message[mesDataObj.creatTime.indexOf(mesDataObj.announceOfTime)]}
             </div>
           </nav>
           
           <section className="w-full px-4 py-4">
             <div className="h-[80vh] w-[20vh] outline-0">
-              {Array.from({length: mesData?.message.length ?? 0},(_, index)=>index).map((i)=>(
+              {Array.from({length: mesDataObj.message ? (mesDataObj?.message.length ?? 0) : 0},(_, index)=>index).map((i)=>(
                 <div
-                  style={{display: (mesData?.block[i] || userId !== mesData?.userID[i]) ? "block" : "none"}}
+                  style={{display: (mesDataObj?.block[i] || userId !== mesDataObj?.userID[i]) ? "block" : "none"}}
                   className={cn(
                     "flex items-center gap-1 rounded-full p-5 transition-colors bg-green-100",
-                    (mesData?.userID[i]===userId)&&("bg-blue-500"),
+                    (mesDataObj?.userID[i]===userId)&&("bg-blue-500"),
                   )}
                   onContextMenu={(e:React.MouseEvent<HTMLDivElement, MouseEvent>) => {
                     e.preventDefault(); 
@@ -144,7 +144,7 @@ function DocOfPage() {
                     setOpen(true);
                   }}
                 >
-                  {mesData?.message[i]}
+                  {mesDataObj?.message[i]}
                 </div>
               ))}
             </div>
@@ -174,13 +174,13 @@ function DocOfPage() {
                   <Button onClick={pinAnnounce}>Set Announcement</Button>
                 </div>
                 <div 
-                  style={{display: (mesData?.userID[mesIndex]===userId) ? "block" : "none"}}
+                  style={{display: mesDataObj?.userID && (mesDataObj?.userID[mesIndex]===userId) ? "block" : "none"}}
                   className="grid grid-cols-4 items-center gap-4"
                 >
                   <Button onClick={deleteYourself}>Delete for Yourself</Button>
                 </div>
                 <div 
-                  style={{display: (mesData?.userID[mesIndex]===userId) ? "block" : "none"}}
+                  style={{display: mesDataObj?.userID && (mesDataObj?.userID[mesIndex]===userId) ? "block" : "none"}}
                   className="grid grid-cols-4 items-center gap-4"
                 >
                   <Button onClick={deleteEveryone}>Delete for Everyone</Button>

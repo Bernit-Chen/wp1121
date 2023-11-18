@@ -13,7 +13,7 @@ export const createDocument = async (userId: string) => {
       .values({
         title: "New Document",
         content: "This is a new document",
-        mesData: {message: [], userID: [], block: [], creatTime: [], announceOfTime: 0}
+        mesData: JSON.stringify({message: [], userID: [], block: [], creatTime: [], announceOfTime: 0})
       })
       .returning();
     await tx.insert(usersToDocumentsTable).values({
@@ -35,10 +35,13 @@ export const getDocuments = async (userId: string) => {
         columns: {
           displayId: true,
           title: true,
+          // mesData: true
         },
       },
     },
   });
+  // console.log(documents)
+  // const documentss = documents.document;
   return documents;
 };
 

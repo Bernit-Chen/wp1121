@@ -113,19 +113,20 @@ export const useDocument = () => {
 
   const content = document?.content || "";
   const mesData = document?.mesData;
+  const mesDataObj = JSON.parse(document?.mesData ?? "{}");
   const setContent = (newContent: string) => {
     if (document === null) return;
     const newMesData ={
-      message: [...document.mesData.message, newContent], //append
-      userID: [...document.mesData.userID, userId ?? ""],
-      block: [...document.mesData.block, true],
-      creatTime: [...document.mesData.creatTime, Date.now()],
-      announceOfTime: document.mesData.announceOfTime
+      message: [...JSON.parse(document.mesData).message, newContent], //append
+      userID: [...JSON.parse(document.mesData).userID, userId ?? ""],
+      block: [...JSON.parse(document.mesData).block, true],
+      creatTime: [...JSON.parse(document.mesData).creatTime, Date.now()],
+      announceOfTime: JSON.parse(document.mesData).announceOfTime
     };
     setDocument({
       ...document,
       content: newContent,
-      mesData: newMesData
+      mesData: JSON.stringify(newMesData)
     });
   };
 
@@ -138,5 +139,6 @@ export const useDocument = () => {
     content,
     mesData,
     setContent,
+    mesDataObj
   };
 };

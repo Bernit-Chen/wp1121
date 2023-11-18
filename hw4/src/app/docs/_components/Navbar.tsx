@@ -49,6 +49,7 @@ async function Navbar({ searchContent }: Props) {
           className="w-full hover:bg-slate-200"
           action={async () => {
             "use server";
+            console.log("create document!")
             const newDocId = await createDocument(userId);
             revalidatePath("/docs");
             redirect(`${publicEnv.NEXT_PUBLIC_BASE_URL}/docs/${newDocId}`);
