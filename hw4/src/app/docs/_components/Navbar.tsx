@@ -79,11 +79,14 @@ async function Navbar({ searchContent }: Props) {
                 className="grow px-3 py-1"
                 href={`/docs/${doc.document.displayId}`}
               >
-                <div className="flex items-center gap-2">
+                <div className="items-center gap-2">
                   <AiFillFileText />
-                  <span className="text-sm font-light ">
+                  <div className="text-sm font-light ">
                     {doc.document.title}
-                  </span>
+                  </div>
+                  <div className="text-sm font-light ">
+                    {JSON.parse(doc.document.mesData).message[0]}
+                  </div>
                 </div>
               </Link>
               <form

@@ -35,14 +35,16 @@ export const getDocuments = async (userId: string) => {
         columns: {
           displayId: true,
           title: true,
-          // mesData: true
+          mesData: true
         },
       },
     },
   });
-  // console.log(documents)
-  // const documentss = documents.document;
-  return documents;
+  const newD = documents;
+  // newD.sort(function(a,b){
+  //   return (a-b); // sort by latestmessage的createdAt
+  // })
+  return newD;
 };
 
 export const deleteDocument = async (documentId: string) => {
