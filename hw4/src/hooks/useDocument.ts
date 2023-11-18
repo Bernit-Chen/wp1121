@@ -26,7 +26,8 @@ export const useDocument = () => {
     if (document === null || dbDocument === null) return true;
     return (
       document.title === dbDocument.title &&
-      document.content === dbDocument.content
+      document.content === dbDocument.content &&
+      document.mesData === dbDocument.mesData
     );
   }, [document, dbDocument]);
 
