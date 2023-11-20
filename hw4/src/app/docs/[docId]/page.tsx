@@ -2,7 +2,7 @@ import Navbar from "../_components/Navbar";
 import DocOfPage from "../_components/DocOfPage";
 
 
-function DocPage({
+function DocPage({ 
   searchParams,
 }: {
   searchParams: { [key: string]: string }
