@@ -9,6 +9,8 @@ import { Button } from "@/components/ui/button";
 import { auth } from "@/lib/auth";
 import { publicEnv } from "@/lib/env/public";
 import SearchBar from "./SearchBar";
+import SearchCreat from "./SearchCreat";
+
 
 import { createDocument, deleteDocument, getDocuments } from "./actions";
 
@@ -17,13 +19,14 @@ type Props = {
 };
 
 async function Navbar({ searchContent }: Props) {
+
   const session = await auth();
   if (!session || !session?.user?.id) {
     redirect(publicEnv.NEXT_PUBLIC_BASE_URL);
   }
-  console.log(searchContent)
   const userId = session.user.id;
   const documents = await getDocuments(userId);
+
   return (
     <nav className="flex w-full flex-col overflow-y-scroll bg-slate-100 pb-10">
       <nav className="sticky top-0 flex flex-col items-center justify-between border-b bg-slate-100 pb-2">
@@ -65,6 +68,7 @@ async function Navbar({ searchContent }: Props) {
         </form>
         <div>
           <SearchBar/>
+          {/* <SearchCreat searchContent={searchContent}/> */}
         </div>
       </nav>
       <section className="flex w-full flex-col pt-3">

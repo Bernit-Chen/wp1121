@@ -15,9 +15,13 @@ async function DocsPage({
   if (!_auth || !_auth.user?.id) redirect(publicEnv.NEXT_PUBLIC_BASE_URL);
   const _userID = _auth.user.id;
   const _documents = await getDocuments(_userID);
-  const _documentID = _documents[0].document.displayId;
-  if (_documents) redirect(`${publicEnv.NEXT_PUBLIC_BASE_URL}/docs/${_documentID}`);
-
+  // if (!_documents[0]) redirect(publicEnv.NEXT_PUBLIC_BASE_URL);//wrong : ->to yellow
+  console.log(_documents);
+  if (_documents.length > 0) {
+    console.log("in");
+    const _documentID = _documents[0].documentId;
+    redirect(`${publicEnv.NEXT_PUBLIC_BASE_URL}/docs/${_documentID}`);
+}
 
 
   return (
