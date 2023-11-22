@@ -79,6 +79,14 @@ async function Navbar({ searchContent }: Props) {
             <p>聊天室已存在</p>
           </div>
         }
+        {documents.filter((doc) => ((
+          (JSON.parse(doc.document.title[0]==="{" ? doc.document.title : '{"title1":"","title2":""}')).title1 === userName) ? 
+            (JSON.parse(doc.document.title[0] === "{" ? doc.document.title : '{"title1":"","title2":""}').title2) : 
+            (JSON.parse(doc.document.title[0] === "{" ? doc.document.title : '{"title1":"","title2":""}').title1)) === searchContent).length === 0 && 
+          <div className="mt-4 w-full rounded-xl text-sm text-slate-500 text-center"> 
+            <p>是否新增聊天室？</p>
+          </div>
+        }
       <section className="flex w-full flex-col pt-3">
         {documents.map((doc, i) => {
           return (
