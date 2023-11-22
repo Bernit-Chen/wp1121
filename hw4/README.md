@@ -38,6 +38,26 @@
    ```
 8. Open http://localhost:3000 in your browser
 
+##
+
+## eslint and Linting
+
+```bash
+yarn
+yarn lint
+```
+
+##
+
+##
+
+## HW4 進階要求
+
+1. **傳送連結**： 自動辨識訊息中文字是否為連結。若是連結，則可以透過該連結開啟新視窗。
+2. **自動滾動**： 當出現新訊息時，聊天紀錄需自動滾動至最下方。
+
+##
+
 # Setup Guide
 
 ## Prettier and ESLint
