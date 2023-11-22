@@ -43,7 +43,7 @@ export const documentsTable = pgTable(
   {
     id: serial("id").primaryKey(), //1,2,3,4
     displayId: uuid("display_id").defaultRandom().notNull().unique(), 
-    title: varchar("title", { length: 100 }).notNull(),
+    title: text("title").notNull(),
     content: text("content").notNull(),
     mesData: text("mesData").notNull(),
   },

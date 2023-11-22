@@ -5,14 +5,14 @@ import { documentsTable, usersToDocumentsTable } from "@/db/schema";
 import { revalidatePath } from "next/cache";
 import { publicEnv } from "@/lib/env/public";
 
-export const createDocument = async (userId: string , userEmail: string) => {
+export const createDocument = async (userId: string , userEmail: string , userDisplayID: string, email: string) => {
   "use server";
 
   const newDocId = await db.transaction(async (tx) => {
     const [newDoc] = await tx
       .insert(documentsTable)
       .values({
-        title: userEmail,
+        title: JSON.stringify({title1: userEmail, title2: email}),
         content: "This is a new document",
         mesData: JSON.stringify({message: [], userID: [], block: [], creatTime: [], announceOfTime: 0})
       })
@@ -22,6 +22,10 @@ export const createDocument = async (userId: string , userEmail: string) => {
       documentId: newDoc.displayId,
     });
     return newDoc.displayId;
+  });
+  await db.insert(usersToDocumentsTable).values({
+    documentId: newDocId,
+    userId: userDisplayID,
   });
   return newDocId;
 };

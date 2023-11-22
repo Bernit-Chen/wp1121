@@ -53,8 +53,8 @@ async function SearchCreat({ searchContent }: Props){
                   .from(usersTable)
                   .where(eq(usersTable.email, email));
                 if (!user) return;
-                const newDocId = await createDocument(userId,userEmail);
-                const result = await addDocumentAuthor(newDocId, email);
+                
+                const newDocId = await createDocument(userId,userEmail,user.displayId,email);
                 
                 redirect(`${publicEnv.NEXT_PUBLIC_BASE_URL}/docs/${newDocId}`);
               }}
