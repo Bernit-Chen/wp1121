@@ -134,12 +134,14 @@ function DocOfPage() {
   }
   return (
         <div className="w-full">
-          <div className="fixed px-10 py-4 text-xl font-semibold text-slate-700 outline-0 bg-blue-100">
-            {title && (JSON.parse(title).title1 === userName ? JSON.parse(title).title2:JSON.parse(title).title1)}
-          </div>
+          <nav className="sticky top-0 flex w-full justify-between p-2 shadow-sm bg-slate-50">
+            <div className="fixed rounded-lg px-10 py-4 text-xl font-semibold w-full text-slate-700 outline-0 bg-blue-100">
+              {title && (JSON.parse(title).title1 === userName ? JSON.parse(title).title2:JSON.parse(title).title1)}
+            </div>
+          </nav>
           <div 
               style={{display: (mesDataObj.announceOfTime!==0) ? "block" : "none"}}
-              className="fixed rounded-lg px-2 py-1 text-slate-700 outline-0 bg-yellow-100"
+              className="flex rounded-3xl mt-2 px-2 py-1 gap-3 text-slate-700 bg-slate-100 sticky top-20 w-full bg-yellow-100"
             >
               {document && document.mesData && mesDataObj.message[mesDataObj.creatTime.indexOf(mesDataObj.announceOfTime)]}
           </div>
