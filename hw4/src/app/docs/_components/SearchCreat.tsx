@@ -1,11 +1,18 @@
 import { usePathname, useRouter } from "next/navigation";
 import React from "react";
 import { useEffect, useState } from "react";
+import { RxAvatar } from "react-icons/rx";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { publicEnv } from "@/lib/env/public";
 import { auth } from "@/lib/auth";
 import { createDocument } from "./actions";
+import { Button } from "@/components/ui/button";
+import { usersTable, usersToDocumentsTable } from "@/db/schema";
+import { eq } from "drizzle-orm";
+import { db } from "@/db";
+import { addDocumentAuthor, getDocumentAuthors } from "../[docId]/_components/actions";
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 
 type Props = {
     searchContent: string;
@@ -18,26 +25,44 @@ async function SearchCreat({ searchContent }: Props){
         redirect(publicEnv.NEXT_PUBLIC_BASE_URL);
     }
     const userId = session.user.id;
-    console.log("新"+searchContent)
+
+    // const authors = await getDocumentAuthors(docId);
 
     return(
-        <form
-          className="w-full hover:bg-slate-200"
-          action={async () => {
-            "use server";
-            console.log("create document!")
-            const newDocId = await createDocument(userId);
-            revalidatePath("/docs");
-            redirect(`${publicEnv.NEXT_PUBLIC_BASE_URL}/docs/${newDocId}`);
-          }}
-        >
-          <button
-            type="submit"
-            className="flex w-full items-center gap-2 px-3 py-1 text-left text-sm text-slate-500"
-          >
-            <p>Create Room</p>
-          </button>
-        </form>
+      <Dialog>
+        <DialogTrigger asChild>
+          <Button variant={"outline"}>Create Room</Button>
+        </DialogTrigger>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Share the document</DialogTitle>
+            <DialogDescription>Share the doc with other users.</DialogDescription>
+            {searchContent}
+          </DialogHeader>
+            <form
+              className="w-full hover:bg-slate-200"
+              action={async () => {
+                "use server";
+                const email = searchContent;
+                if (!email) return;
+                if (typeof email !== "string") return;
+                const [user] = await db
+                  .select({
+                    displayId: usersTable.displayId,
+                  })
+                  .from(usersTable)
+                  .where(eq(usersTable.email, email));
+                if (!user) return;
+                const newDocId = await createDocument(userId);
+                const result = await addDocumentAuthor(newDocId, email);
+                
+                redirect(`${publicEnv.NEXT_PUBLIC_BASE_URL}/docs/${newDocId}`);
+              }}
+            >
+              <Button type="submit">Add</Button>
+            </form>
+        </DialogContent>
+      </Dialog>
     );
 }
 

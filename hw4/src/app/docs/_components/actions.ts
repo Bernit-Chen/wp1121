@@ -13,7 +13,7 @@ export const createDocument = async (userId: string) => {
     const [newDoc] = await tx
       .insert(documentsTable)
       .values({
-        title: "New Document",
+        title: userId,
         content: "This is a new document",
         mesData: JSON.stringify({message: [], userID: [], block: [], creatTime: [], announceOfTime: 0})
       })
@@ -44,6 +44,7 @@ export const getDocuments = async (userId: string) => {
   });
   const newD = documents;
   newD.sort(function(a,b){
+    if(!b.document.mesData) return -1;
     return (JSON.parse(b.document.mesData).creatTime[JSON.parse(b.document.mesData).creatTime.length-1] - JSON.parse(a.document.mesData).creatTime[JSON.parse(a.document.mesData).creatTime.length-1]); // sort by latestmessage的createdAt
   })
   // revalidatePath(`${publicEnv.NEXT_PUBLIC_BASE_URL}/docs/${docId}`);

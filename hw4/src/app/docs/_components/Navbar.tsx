@@ -68,7 +68,7 @@ async function Navbar({ searchContent }: Props) {
         </form>
         <div>
           <SearchBar/>
-          {/* <SearchCreat searchContent={searchContent}/> */}
+          <SearchCreat searchContent={searchContent}/>
         </div>
       </nav>
       <section className="flex w-full flex-col pt-3">
