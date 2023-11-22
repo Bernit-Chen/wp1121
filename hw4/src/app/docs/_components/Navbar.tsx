@@ -25,6 +25,7 @@ async function Navbar({ searchContent }: Props) {
     redirect(publicEnv.NEXT_PUBLIC_BASE_URL);
   }
   const userId = session.user.id;
+  const userName = session.user.email;
   const documents = await getDocuments(userId);
 
   return (
@@ -75,7 +76,7 @@ async function Navbar({ searchContent }: Props) {
         {documents.map((doc, i) => {
           return (
             <div
-              style={{display: doc.document.title.includes(searchContent) ? "block":"none"}}
+              style={{display: (JSON.parse(doc.document.title).title1 === userName ? JSON.parse(doc.document.title).title2.includes(searchContent):JSON.parse(doc.document.title).title1.includes(searchContent)) ? "block":"none"}}
               key={i}
               className="group flex w-full cursor-pointer items-center justify-between gap-2 text-slate-400 hover:bg-slate-200 "
             >
@@ -86,7 +87,7 @@ async function Navbar({ searchContent }: Props) {
                 <div className="items-center gap-2">
                   <AiFillFileText />
                   <div className="text-sm font-light ">
-                    {doc.document.title}
+                    {JSON.parse(doc.document.title).title1 === userName ? JSON.parse(doc.document.title).title2:JSON.parse(doc.document.title).title1}
                   </div>
                   <div className="text-sm font-light ">
                     {JSON.parse(doc.document.mesData).message[JSON.parse(doc.document.mesData).message.length-1]}

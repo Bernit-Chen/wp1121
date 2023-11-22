@@ -109,6 +109,7 @@ function DocOfPage() {
   
   const { data: session } = useSession();
   const userId = session?.user?.id;
+  const userName = session?.user?.email;
 
   const messagesEndRef = useRef<null | HTMLDivElement>(null);
   const scrollToBottom = () => {
@@ -129,9 +130,17 @@ function DocOfPage() {
           return part;
        });
   }
-
   return (
         <div className="w-full">
+          <div className="px-10 py-4 text-xl font-semibold text-slate-700 outline-0 bg-blue-100">
+            {title && (JSON.parse(title).title1 === userName ? JSON.parse(title).title2:JSON.parse(title).title1)}
+          </div>
+          <div 
+              style={{display: (mesDataObj.announceOfTime!==0) ? "block" : "none"}}
+              className="rounded-lg px-2 py-1 text-slate-700 outline-0 bg-yellow-100"
+            >
+              {document && document.mesData && mesDataObj.message[mesDataObj.creatTime.indexOf(mesDataObj.announceOfTime)]}
+          </div>
           <nav className="sticky top-0 flex w-full justify-between p-2 shadow-sm">
             {/* <input
               value={title}
@@ -141,12 +150,6 @@ function DocOfPage() {
               placeholder="Document Title"
               className="rounded-lg px-2 py-1 text-slate-700 outline-0 focus:bg-slate-100"
             /> */}
-            <div 
-              style={{display: (mesDataObj.announceOfTime!==0) ? "block" : "none"}}
-              className="rounded-lg px-2 py-1 text-slate-700 outline-0 focus:bg-slate-100"
-            >
-              {document && document.mesData && mesDataObj.message[mesDataObj.creatTime.indexOf(mesDataObj.announceOfTime)]}
-            </div>
           </nav>
           
           <section className="w-full px-4 py-4">
@@ -155,8 +158,8 @@ function DocOfPage() {
                 <div
                   style={{display: (mesDataObj?.block[i] || userId !== mesDataObj?.userID[i]) ? "block" : "none"}}
                   className={cn(
-                    "flex items-center gap-1 rounded-full p-5 transition-colors bg-green-100",
-                    (mesDataObj?.userID[i]===userId)&&("bg-blue-500"),
+                    "flex items-center gap-1 rounded-full p-5 transition-colors right-0px bg-green-100",
+                    (mesDataObj?.userID[i]===userId)&&("left-0px bg-blue-500"),
                   )}
                   onContextMenu={(e:React.MouseEvent<HTMLDivElement, MouseEvent>) => {
                     e.preventDefault(); 

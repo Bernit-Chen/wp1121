@@ -25,7 +25,7 @@ export const {
           email: usersTable.email,
         })
         .from(usersTable)
-        .where(eq(usersTable.email, email.toLowerCase()))
+        .where(eq(usersTable.email, email))
         .execute();
 
       return {
@@ -51,7 +51,7 @@ export const {
           id: usersTable.displayId,
         })
         .from(usersTable)
-        .where(eq(usersTable.email, email.toLowerCase()))
+        .where(eq(usersTable.email, email))
         .execute();
       if (existedUser) return token;
       if (provider !== "github") return token;
@@ -59,7 +59,7 @@ export const {
       // Sign up
       await db.insert(usersTable).values({
         username: name,
-        email: email.toLowerCase(),
+        email: email,
         provider,
       });
 

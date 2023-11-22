@@ -38,20 +38,20 @@ export default CredentialsProvider({
         hashedPassword: usersTable.hashedPassword,
       })
       .from(usersTable)
-      .where(eq(usersTable.email, validatedCredentials.email.toLowerCase()))
+      .where(eq(usersTable.email, validatedCredentials.email))
       .execute();
     if (!existedUser) {
       // Sign up
-      if (!username) {
-        console.log("Name is required.");
-        return null;
-      }
+      // if (!username) {
+      //   console.log("Name is required.");
+      //   return null;
+      // }
       const hashedPassword = await bcrypt.hash(password, 10);
       const [createdUser] = await db
         .insert(usersTable)
         .values({
-          username,
-          email: email.toLowerCase(),
+          username: email,
+          email: email,
           hashedPassword,
           provider: "credentials",
         })
