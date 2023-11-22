@@ -3,7 +3,6 @@
 import { useState } from "react";
 
 import { signIn } from "next-auth/react";
-import Image from "next/image";
 
 // Run: npx shadcn-ui@latest add button
 import { Button } from "@/components/ui/button";
@@ -15,7 +14,7 @@ import AuthInput from "./AuthInput";
 
 function AuthForm() {
   const [email, setEmail] = useState<string>("");
-  const [username, setUsername] = useState<string>("");
+  const [username] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [confirmPassword, setConfirmPassword] = useState<string>("");
   const [isSignUp, setIsSignUp] = useState<boolean>(false);

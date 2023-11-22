@@ -1,17 +1,14 @@
-import { AiFillDelete, AiFillFileAdd, AiFillFileText } from "react-icons/ai";
+import { AiFillDelete, AiFillFileText } from "react-icons/ai";
 import { RxAvatar } from "react-icons/rx";
 import { revalidatePath } from "next/cache";
 import Link from "next/link";
-import { usersTable } from "@/db/schema";
 import { redirect } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { auth } from "@/lib/auth";
 import { publicEnv } from "@/lib/env/public";
-import SearchBar from "./SearchBar";
+import SearchBar from "./new";
 import SearchCreat from "./SearchCreat";
-import { eq } from "drizzle-orm";
-import { db } from "@/db";
-import { createDocument, deleteDocument, getDocuments } from "./actions";
+import {  deleteDocument, getDocuments } from "./actions";
 
 type Props = {
   searchContent: string;
@@ -25,7 +22,6 @@ async function Navbar({ searchContent }: Props) {
   }
   const userId = session.user.id;
   const userName = session.user.email;
-  const userEmail = session.user.email;
   const documents = await getDocuments(userId);
 
   return (

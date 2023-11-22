@@ -2,8 +2,6 @@ import { eq } from "drizzle-orm";
 
 import { db } from "@/db";
 import { documentsTable, usersToDocumentsTable } from "@/db/schema";
-import { revalidatePath } from "next/cache";
-import { publicEnv } from "@/lib/env/public";
 
 export const createDocument = async (userId: string , userEmail: string , userDisplayID: string, email: string) => {
   "use server";

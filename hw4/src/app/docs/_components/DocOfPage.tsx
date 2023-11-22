@@ -13,7 +13,7 @@ import {
 
 
 function DocOfPage() {
-  const { title, setTitle, content, mesData, setContent, mesDataObj, document, setDocument } = useDocument();
+  const { title, mesData, setContent, mesDataObj, document, setDocument } = useDocument();
   const inputRef = useRef<HTMLInputElement>(null);
   const [open,setOpen] = useState(false);
   const [mesIndex,setMesIndex] = useState(0);
@@ -110,6 +110,7 @@ function DocOfPage() {
   const { data: session } = useSession();
   const userId = session?.user?.id;
   const userName = session?.user?.email;
+  const parsed = JSON.parse(document?.mesData ?? '{"message":""}');
 
   const messagesEndRef = useRef<null | HTMLDivElement>(null);
   const scrollToBottom = () => {
@@ -118,14 +119,15 @@ function DocOfPage() {
   }
   useEffect(() => {
     scrollToBottom()
-  }, [JSON.parse(document?.mesData ?? '{"message":""}').message]);
+  }, [parsed.message]);
+// }, [JSON.parse(document?.mesData ?? '{"message":""}').message]);
 
   function urlify(text:string) {
     const urlRegex = /(https?:\/\/[^\s]+)/g;
     return text.split(urlRegex)
        .map(part => {
           if(part.match(urlRegex)) {
-             return <a href={part} target="_blank">{part}</a>;
+             return <a href={part} key={Date.now()} rel="noreferrer" target="_blank">{part}</a>;
           }
           return part;
        });
@@ -156,10 +158,11 @@ function DocOfPage() {
             <div className="outline-0 grid justify-items-stretch w-full">
               {Array.from({length: mesDataObj.message ? (mesDataObj?.message.length ?? 0) : 0},(_, index)=>index).map((i)=>(
                 <div
+                  key={i}
                   style={{display: (mesDataObj?.block[i] || userId !== mesDataObj?.userID[i]) ? "block" : "none"}}
                   className={cn(
-                    "flex items-center gap-1 rounded-full p-5 transition-colors justify-self-end bg-green-100",
-                    (mesDataObj?.userID[i]===userId)&&  ("justify-self-start bg-blue-500"),
+                    "flex items-center gap-1 rounded-full p-5 transition-colors justify-self-end bg-blue-400",
+                    (mesDataObj?.userID[i]!==userId)&&  ("justify-self-start bg-green-100"),
                   )}
                   onContextMenu={(e:React.MouseEvent<HTMLDivElement, MouseEvent>) => {
                     e.preventDefault(); 

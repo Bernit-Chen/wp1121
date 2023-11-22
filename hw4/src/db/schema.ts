@@ -7,7 +7,6 @@ import {
   uuid,
   varchar,
   unique,
-  json
 } from "drizzle-orm/pg-core";
 
 // Checkout the many-to-many relationship in the following tutorial:

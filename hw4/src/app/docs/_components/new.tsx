@@ -11,7 +11,7 @@ export default function SearchBar(){
 
     useEffect(()=>{
         router.push(`${pathname}?search=${search}`);
-    }, [search,router])
+    }, [search,router,pathname])
 
     return(
         <input

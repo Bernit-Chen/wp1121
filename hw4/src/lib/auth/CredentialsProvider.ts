@@ -27,7 +27,7 @@ export default CredentialsProvider({
       console.log("Wrong credentials. Try again.");
       return null;
     }
-    const { email, username, password } = validatedCredentials;
+    const { email, password } = validatedCredentials;
 
     const [existedUser] = await db
       .select({
