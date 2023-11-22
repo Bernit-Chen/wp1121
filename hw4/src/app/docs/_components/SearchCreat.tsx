@@ -42,6 +42,7 @@ async function SearchCreat({ searchContent, existed }: Props){
                 const email = searchContent;
                 if (!email) return;
                 if (typeof email !== "string") return;
+                if (email===userEmail) return;
                 const [user] = await db
                   .select({
                     displayId: usersTable.displayId,
