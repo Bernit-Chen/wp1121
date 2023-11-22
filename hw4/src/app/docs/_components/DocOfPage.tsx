@@ -132,12 +132,12 @@ function DocOfPage() {
   }
   return (
         <div className="w-full">
-          <div className="px-10 py-4 text-xl font-semibold text-slate-700 outline-0 bg-blue-100">
+          <div className="fixed px-10 py-4 text-xl font-semibold text-slate-700 outline-0 bg-blue-100">
             {title && (JSON.parse(title).title1 === userName ? JSON.parse(title).title2:JSON.parse(title).title1)}
           </div>
           <div 
               style={{display: (mesDataObj.announceOfTime!==0) ? "block" : "none"}}
-              className="rounded-lg px-2 py-1 text-slate-700 outline-0 bg-yellow-100"
+              className="fixed rounded-lg px-2 py-1 text-slate-700 outline-0 bg-yellow-100"
             >
               {document && document.mesData && mesDataObj.message[mesDataObj.creatTime.indexOf(mesDataObj.announceOfTime)]}
           </div>
@@ -153,13 +153,13 @@ function DocOfPage() {
           </nav>
           
           <section className="w-full px-4 py-4">
-            <div className="h-[80vh] w-[20vh] outline-0">
+            <div className="outline-0 grid justify-items-stretch w-full">
               {Array.from({length: mesDataObj.message ? (mesDataObj?.message.length ?? 0) : 0},(_, index)=>index).map((i)=>(
                 <div
                   style={{display: (mesDataObj?.block[i] || userId !== mesDataObj?.userID[i]) ? "block" : "none"}}
                   className={cn(
-                    "flex items-center gap-1 rounded-full p-5 transition-colors right-0px bg-green-100",
-                    (mesDataObj?.userID[i]===userId)&&("left-0px bg-blue-500"),
+                    "flex items-center gap-1 rounded-full p-5 transition-colors justify-self-end bg-green-100",
+                    (mesDataObj?.userID[i]===userId)&&  ("justify-self-start bg-blue-500"),
                   )}
                   onContextMenu={(e:React.MouseEvent<HTMLDivElement, MouseEvent>) => {
                     e.preventDefault(); 
@@ -188,7 +188,7 @@ function DocOfPage() {
             ref={inputRef}
             placeholder="message"
             onKeyDown={e => handleReply(e)}
-            className="sticky bottom-0 w-full bg-gray-100"
+            className="sticky bottom-0 w-full fixed bg-gray-100"
           />
 
           <Dialog open={open} onOpenChange={()=>{if(open) setOpen(false);}}>
