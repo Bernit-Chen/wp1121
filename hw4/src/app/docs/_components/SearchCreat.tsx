@@ -1,24 +1,20 @@
-import { usePathname, useRouter } from "next/navigation";
 import React from "react";
-import { useEffect, useState } from "react";
-import { RxAvatar } from "react-icons/rx";
-import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { publicEnv } from "@/lib/env/public";
 import { auth } from "@/lib/auth";
 import { createDocument } from "./actions";
 import { Button } from "@/components/ui/button";
-import { usersTable, usersToDocumentsTable } from "@/db/schema";
+import { usersTable } from "@/db/schema";
 import { eq } from "drizzle-orm";
 import { db } from "@/db";
-import { addDocumentAuthor, getDocumentAuthors } from "../[docId]/_components/actions";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 
 type Props = {
     searchContent: string;
+    existed: boolean;
   };
 
-async function SearchCreat({ searchContent }: Props){
+async function SearchCreat({ searchContent, existed }: Props){
 
     const session = await auth();
     if (!session || !session?.user?.id) {
@@ -35,14 +31,14 @@ async function SearchCreat({ searchContent }: Props){
         </DialogTrigger>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>Share the document</DialogTitle>
-            <DialogDescription>Share the doc with other users.</DialogDescription>
-            {searchContent}
+            <DialogTitle>DO you want to add the Chat Room with {searchContent} ?</DialogTitle>
+            <DialogDescription>ADD the room with {searchContent} .</DialogDescription>
           </DialogHeader>
             <form
               className="w-full hover:bg-slate-200"
               action={async () => {
                 "use server";
+                if(existed) return;
                 const email = searchContent;
                 if (!email) return;
                 if (typeof email !== "string") return;

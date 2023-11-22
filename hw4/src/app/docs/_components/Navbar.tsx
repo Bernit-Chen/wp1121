@@ -1,17 +1,16 @@
 import { AiFillDelete, AiFillFileAdd, AiFillFileText } from "react-icons/ai";
 import { RxAvatar } from "react-icons/rx";
-
 import { revalidatePath } from "next/cache";
 import Link from "next/link";
+import { usersTable } from "@/db/schema";
 import { redirect } from "next/navigation";
-
 import { Button } from "@/components/ui/button";
 import { auth } from "@/lib/auth";
 import { publicEnv } from "@/lib/env/public";
 import SearchBar from "./SearchBar";
 import SearchCreat from "./SearchCreat";
-
-
+import { eq } from "drizzle-orm";
+import { db } from "@/db";
 import { createDocument, deleteDocument, getDocuments } from "./actions";
 
 type Props = {
@@ -26,6 +25,7 @@ async function Navbar({ searchContent }: Props) {
   }
   const userId = session.user.id;
   const userName = session.user.email;
+  const userEmail = session.user.email;
   const documents = await getDocuments(userId);
 
   return (
@@ -69,9 +69,20 @@ async function Navbar({ searchContent }: Props) {
         </form> */}
         <div>
           <SearchBar/>
-          <SearchCreat searchContent={searchContent}/>
+          <SearchCreat  existed={documents.filter((doc) => ((
+          (JSON.parse(doc.document.title[0]==="{" ? doc.document.title : '{"title1":"","title2":""}')).title1 === userName) ? 
+            (JSON.parse(doc.document.title[0] === "{" ? doc.document.title : '{"title1":"","title2":""}').title2) : 
+            (JSON.parse(doc.document.title[0] === "{" ? doc.document.title : '{"title1":"","title2":""}').title1)) === searchContent).length >= 1} searchContent={searchContent}/>
         </div>
-      </nav>
+        </nav>
+        {documents.filter((doc) => ((
+          (JSON.parse(doc.document.title[0]==="{" ? doc.document.title : '{"title1":"","title2":""}')).title1 === userName) ? 
+            (JSON.parse(doc.document.title[0] === "{" ? doc.document.title : '{"title1":"","title2":""}').title2) : 
+            (JSON.parse(doc.document.title[0] === "{" ? doc.document.title : '{"title1":"","title2":""}').title1)) === searchContent).length >= 1 && 
+          <div className="mt-4 w-full rounded-xl text-sm text-slate-500 text-center"> 
+            <p>聊天室已存在</p>
+          </div>
+        }
       <section className="flex w-full flex-col pt-3">
         {documents.map((doc, i) => {
           return (
@@ -112,6 +123,46 @@ async function Navbar({ searchContent }: Props) {
           );
         })}
       </section>
+
+      {/* {documents.filter((doc) => (((JSON.parse(doc.document.title[0] === "{" ? doc.document.title : '{"user":["",""]}').user[0]) === username) ? (JSON.parse(doc.document.title[0] === "{" ? doc.document.title : '{"user":["",""]}').user[1]) : (JSON.parse(doc.document.title[0] === "{" ? doc.document.title : '{"user":["",""]}').user[0])).includes(searchText)).length === 0 && searchText && searchText !== "" && <form
+          className="hover:bg-slate-200 w-full rounded-xl"
+          action={async () => {
+            "use server";
+            if (searchContent === userName) {
+              console.log("cannot chat with yourself");
+              return;
+            }
+            const email = searchContent;
+                if (!email) return;
+                if (typeof email !== "string") return;
+                const [user] = await db
+                  .select({
+                    displayId: usersTable.displayId,
+                  })
+                  .from(usersTable)
+                  .where(eq(usersTable.email, email));
+            if (!user) {
+              console.log("user undefined")
+              return;
+            }
+
+            const newDocId = await createDocument(userId,userEmail,user.displayId,email);
+            if (!newDocId) {
+              console.log("newDocId undefined")
+              return;
+            }
+            revalidatePath("/docs");
+            redirect(`${publicEnv.NEXT_PUBLIC_BASE_URL}/docs/${newDocId}`);
+          }}
+        > 
+          <button
+            type="submit"
+            className="w-full flex items-center gap-2 px-3 py-1 text-left text-sm text-slate-500"
+          >
+            <p>是否新增聊天室？</p>
+            <p>Chat with {searchContent}</p>
+          </button>
+        </form>} */}
     </nav>
   );
 }
