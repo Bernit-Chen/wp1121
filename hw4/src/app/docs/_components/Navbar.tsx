@@ -48,7 +48,7 @@ async function Navbar({ searchContent }: Props) {
           </Link>
         </div>
 
-        <form
+        {/* <form
           className="w-full hover:bg-slate-200"
           action={async () => {
             "use server";
@@ -65,7 +65,7 @@ async function Navbar({ searchContent }: Props) {
             <AiFillFileAdd size={16} />
             <p>Create Document</p>
           </button>
-        </form>
+        </form> */}
         <div>
           <SearchBar/>
           <SearchCreat searchContent={searchContent}/>

@@ -5,15 +5,14 @@ import { documentsTable, usersToDocumentsTable } from "@/db/schema";
 import { revalidatePath } from "next/cache";
 import { publicEnv } from "@/lib/env/public";
 
-export const createDocument = async (userId: string) => {
+export const createDocument = async (userId: string , userEmail: string) => {
   "use server";
-  
 
   const newDocId = await db.transaction(async (tx) => {
     const [newDoc] = await tx
       .insert(documentsTable)
       .values({
-        title: userId,
+        title: userEmail,
         content: "This is a new document",
         mesData: JSON.stringify({message: [], userID: [], block: [], creatTime: [], announceOfTime: 0})
       })
