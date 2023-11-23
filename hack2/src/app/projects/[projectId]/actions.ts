@@ -105,8 +105,9 @@ export async function updateTaskComplete(
   // TODO: 9. Update the task's `completed` column
   await db
   .update(tasksTable)
-  .set({completed:completed})
-  .where(eq(tasksTable.displayId, projectId))
+  .set({completed:completed,})
+  .where(eq(tasksTable.displayId, taskId))
+  .returning();
   // TODO: 9. end
 
   revalidatePath(`/projects/${projectId}`);
