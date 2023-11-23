@@ -24,7 +24,12 @@ function AuthForm() {
     e.preventDefault();
     // TODO: 3. sign in by calling signIn() with the correct parameters
     // hint: notion clone
-
+    signIn("credentials", {     // next-auth內建signIn ("credentials"是provider的名字)
+      email,
+      name,
+      password,
+      callbackUrl: `${publicEnv.NEXT_PUBLIC_BASE_URL}/projects`,    // 登入後去哪裡 => /docs
+    });
     // TODO: 3. end
   };
   return (
