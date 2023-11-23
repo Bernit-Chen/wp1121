@@ -103,7 +103,7 @@ export async function updateTaskComplete(
   });
 
   // TODO: 9. Update the task's `completed` column
-
+  
   // TODO: 9. end
 
   revalidatePath(`/projects/${projectId}`);
