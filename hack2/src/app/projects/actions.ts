@@ -65,7 +65,7 @@ export async function createProject(
   });
 
   // TODO: 6. Update the navbar for the user's projects
-
+  revalidatePath(`${publicEnv.NEXT_PUBLIC_BASE_URL}/projects`);
   // TODO: 6. end
 
   return newProject;
