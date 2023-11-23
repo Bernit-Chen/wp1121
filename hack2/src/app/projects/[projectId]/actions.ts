@@ -107,7 +107,6 @@ export async function updateTaskComplete(
   .update(tasksTable)
   .set({completed:completed,})
   .where(eq(tasksTable.displayId, taskId))
-  .returning();
   // TODO: 9. end
 
   revalidatePath(`/projects/${projectId}`);
