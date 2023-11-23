@@ -20,7 +20,10 @@ export async function getProject(projectId: string) {
 
   const userToProject = await db.query.usersToProjectsTable.findFirst({
     // TODO: 8. Select the correct project by userId and projectId
-
+    where: and(
+      eq(usersToProjectsTable.userId, userId),
+      eq(usersToProjectsTable.projectId, projectId),      // userId跟documentId要同時有紀錄
+    ),
     // TODO: 8. end
     columns: {},
     with: {
