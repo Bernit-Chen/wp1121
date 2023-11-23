@@ -20,7 +20,7 @@ export async function getProject(projectId: string) {
 
   const userToProject = await db.query.usersToProjectsTable.findFirst({
     // TODO: 8. Select the correct project by userId and projectId
-    
+
     // TODO: 8. end
     columns: {},
     with: {
@@ -119,8 +119,8 @@ export async function deleteTask(taskId: string, projectId: string) {
 
   // TODO: 10. Delete the task whose displayId is `taskId`
   await db
-    .delete(tasksTable)
-    .where(eq(tasksTable.displayId, taskId));
+  .delete(tasksTable)
+  .where(eq(tasksTable.displayId, taskId));
   // TODO: 10. end
 
   revalidatePath(`/projects/${projectId}`);
